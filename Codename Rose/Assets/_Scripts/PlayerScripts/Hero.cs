@@ -1,3 +1,4 @@
+using System.Collections;
 using _Scripts.MapGeneration;
 using _Scripts.Weapons;
 using UnityEngine;
@@ -8,6 +9,7 @@ namespace _Scripts.PlayerScripts
     public class Hero : MonoBehaviour
     {
         [SerializeField] private float _speed;
+        [SerializeField] private float _dashSpeed;
         [SerializeField] private Animator _animator;
         [SerializeField] private LayerMask _layer;
         [SerializeField] private Weapon _equippedWeapon;
@@ -22,6 +24,7 @@ namespace _Scripts.PlayerScripts
         private SpriteRenderer _spriteRenderer;
         private float _radius = 1;
         private Collider2D[] _interactionResult;
+        private bool _isDashing;
 
         private void Awake()
         {
@@ -31,7 +34,8 @@ namespace _Scripts.PlayerScripts
 
         private void FixedUpdate()
         {
-            _rigidbody.velocity = new Vector2(_movementVector.x * _speed, _movementVector.y * _speed);
+            if (!_isDashing)
+                _rigidbody.velocity = new Vector2(_movementVector.x * _speed, _movementVector.y * _speed);
             Animate();
         }
 
@@ -80,9 +84,19 @@ namespace _Scripts.PlayerScripts
             coll.Collect();
         }
 
-        public void Attack()
+        public void Attack(AttackTypes attackType)
         {
-            _equippedWeapon.Attack();
+            _equippedWeapon.Attack(attackType);
+        }
+
+        public IEnumerator Dash()
+        {
+            _isDashing = true;
+            _rigidbody.AddForce(_lookDirection * _dashSpeed, ForceMode2D.Impulse);
+            yield return new WaitForSeconds(0.1f);
+            _rigidbody.velocity = Vector2.zero;
+            _isDashing = false;
+
         }
     }
 }

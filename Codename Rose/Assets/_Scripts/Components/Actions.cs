@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace _Scripts.MapGeneration
+namespace _Scripts.Components
 {
     [Serializable]
     public class Actions

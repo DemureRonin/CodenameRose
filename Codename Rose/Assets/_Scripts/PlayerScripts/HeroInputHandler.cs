@@ -1,3 +1,5 @@
+using _Scripts.Weapons;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +20,7 @@ namespace _Scripts.PlayerScripts
             var vector = context.ReadValue<Vector2>();
             _hero.SetVector(vector);
         }
+
         public void OnQButtonPressed(InputAction.CallbackContext context)
         {
             if (context.performed)
@@ -30,7 +33,23 @@ namespace _Scripts.PlayerScripts
         {
             if (context.performed)
             {
-                _hero.Attack();
+                _hero.Attack(AttackTypes.Light);
+            }
+        }
+
+        public void OnRightMousePressed(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                _hero.Attack(AttackTypes.Heavy);
+            }
+        }
+
+        public void OnShiftPressed(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                StartCoroutine(_hero.Dash());
             }
         }
     }

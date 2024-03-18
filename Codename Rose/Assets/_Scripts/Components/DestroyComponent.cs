@@ -31,7 +31,7 @@ namespace _Scripts.Components
 
         public void Destroy()
         {
-            Destroy(gameObject);
+            Destroy(_objectToDestroy);
         }
 
         private IEnumerator DestroyCoroutine()

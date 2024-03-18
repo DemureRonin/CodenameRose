@@ -19,7 +19,7 @@ namespace _Scripts.Components
                 _seed = Random.value * Mathf.PI * 2;
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             var position = transform.position;
             position.y = _originalY + Mathf.Sin(_seed + Time.time * _frequency) * _amplitude;

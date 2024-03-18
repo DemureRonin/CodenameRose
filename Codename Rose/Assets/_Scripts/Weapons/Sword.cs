@@ -6,28 +6,42 @@ using UnityEngine;
 
 namespace _Scripts.Weapons
 {
+    [RequireComponent(typeof(SpriteRenderer))]
     public class Sword : Weapon
     {
-        [SerializeField] private float _followSpeed;
-        [SerializeField] private Animator _weaponAnimator;
-        [SerializeField] private float _idleTimeToSwitchState;
-        [SerializeField] private float _attackRange;
-        [SerializeField] private float _attackSpeed;
+        [SerializeField] private float _lightAttackDelayTime = 0.2f;
+        [SerializeField] private float _heavyAttackDelayTime = 0.5f;
+
+        private int _comboCounter;
+
+        private WaitForSeconds _lightAttackDelay;
+        private WaitForSeconds _heavyAttackDelay;
 
         private Vector2 _attackDirection;
+        private Vector2 _attackPoint;
         private Vector2 _lastAttackPosition;
+        private Vector2 _initialSwordPosition;
+        private Vector2 _mousePosition;
 
         private Timer _stateSwitchTimer;
+        private Timer _comboTimer;
         private Camera _camera;
 
         private SpriteRenderer _spriteRenderer;
         private Transform _followTargetPosition;
         private Hero _player;
 
+        private bool _isInCombat;
         private bool _isAttacking;
+        private bool _canDamage;
+        private bool _canAttack;
+
+        public bool IsInCombat => _isInCombat;
 
         private void Awake()
         {
+            _lightAttackDelay = new WaitForSeconds(_lightAttackDelayTime);
+            _heavyAttackDelay = new WaitForSeconds(_heavyAttackDelayTime);
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _camera = Camera.main;
         }
@@ -45,40 +59,129 @@ namespace _Scripts.Weapons
             _spriteRenderer.sortingOrder = -(int)(transform.position.y * MapGenerator.SortingDiscretion) - 1;
             if (_stateSwitchTimer.IsReady)
             {
-                _isAttacking = false;
+                _isInCombat = false;
                 _lastAttackPosition = _player.transform.position;
             }
 
-            if (!_isAttacking)
+            if (!_isInCombat)
             {
                 UpdateIdleDirection();
                 FollowPlayer();
             }
-            else
+
+            if (!_isAttacking)
                 RotateToCursor();
         }
 
-        public override void Attack()
+        public override void Attack(AttackTypes attackType)
         {
+            if (_isAttacking)
+            {
+                StartCoroutine(EnqueueComboAttack(attackType));
+                return;
+            }
+
             _isAttacking = true;
+            _isInCombat = true;
             _stateSwitchTimer.StartTimer();
-            transform.position = Vector2.Lerp(transform.position, _lastAttackPosition, 90);
-            StartCoroutine(LightAttack());
+            transform.position = Vector2.MoveTowards(transform.position, _lastAttackPosition, 90);
+            var mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
+            switch (attackType)
+            {
+                case AttackTypes.Light:
+                    StartCoroutine(LightAttack(mousePosition));
+                    break;
+                case AttackTypes.Heavy:
+                    StartCoroutine(HeavyAttack(mousePosition));
+                    break;
+            }
         }
 
-        private IEnumerator LightAttack()
+        public override void Attack(AttackTypes attackType, Vector2 mousePosition)
         {
-            _weaponAnimator.Play("attack");
-            yield return new WaitForSeconds(0.2f);
+            _isAttacking = true;
+            _isInCombat = true;
+            _stateSwitchTimer.StartTimer();
+            transform.position = Vector2.MoveTowards(transform.position, _lastAttackPosition, 90);
+            switch (attackType)
+            {
+                case AttackTypes.Light:
+                    StartCoroutine(LightAttack(mousePosition));
+                    break;
+                case AttackTypes.Heavy:
+                    StartCoroutine(HeavyAttack(mousePosition));
+                    break;
+            }
+        }
 
+        private IEnumerator EnqueueComboAttack(AttackTypes attackType)
+        {
+            if (_comboCounter > 3) yield break;
+            _comboCounter++;
             var mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
-            var swordPosition = transform.position;
-            var attackDirection = new Vector2(mousePosition.x - swordPosition.x, mousePosition.y - swordPosition.y)
-                .normalized;
-            var maxAttackPoint = new Vector2(attackDirection.x * _attackRange + swordPosition.x,
-                attackDirection.y * _attackRange + swordPosition.y);
+            yield return new WaitUntil(() => !_isAttacking);
 
-            _lastAttackPosition = transform.position = Vector2.Lerp(swordPosition, maxAttackPoint, _attackSpeed);
+            Attack(attackType, mousePosition);
+            _comboCounter--;
+        }
+
+        public override IEnumerator LightAttack(Vector2 mousePosition)
+        {
+            _weaponAnimator.Play("lightAttack");
+            yield return _lightAttackDelay;
+
+            _initialSwordPosition = transform.position;
+            var playerPosition = _player.transform.position;
+
+            var attackX = Mathf.Clamp(mousePosition.x, playerPosition.x - _maxAttackDistance,
+                playerPosition.x + _maxAttackDistance);
+
+            var attackY = Mathf.Clamp(mousePosition.y, playerPosition.y - _maxAttackDistance,
+                playerPosition.y + _maxAttackDistance);
+
+            _attackPoint = new Vector2(attackX, attackY);
+
+            StartCoroutine(GoToLocation());
+            yield return new WaitUntil(() => _canDamage);
+            CheckEnemiesHit();
+        }
+
+        private IEnumerator GoToLocation()
+        {
+            while ((Vector2)transform.position != _attackPoint)
+            {
+                Transform swordTransform;
+                (swordTransform = transform).position =
+                    Vector2.MoveTowards(transform.position, _attackPoint, _attackSpeed);
+                var rotation = _attackPoint - (Vector2)swordTransform.position;
+                var zRotation = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
+
+                transform.rotation = Quaternion.Euler(0, 0, zRotation);
+                yield return null;
+            }
+
+            _lastAttackPosition = transform.position;
+            _canDamage = true;
+        }
+
+        private void CheckEnemiesHit()
+        {
+            var hits = new RaycastHit2D[10];
+            var numHits = Physics2D.LinecastNonAlloc(transform.position, _initialSwordPosition, hits, _layerToHit);
+
+            for (int i = 0; i < numHits; i++)
+            {
+                _modifyHealthComponent.ModifyHealth(hits[i].collider.gameObject);
+            }
+
+            _canDamage = false;
+            _isAttacking = false;
+        }
+
+        public override IEnumerator HeavyAttack(Vector2 mousePosition)
+        {
+            _weaponAnimator.Play("heavyAttack");
+            yield return _heavyAttackDelay;
         }
 
         private void RotateToCursor()

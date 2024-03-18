@@ -24,9 +24,27 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Attack",
+                    "name": "LightAttack",
                     "type": "Button",
                     "id": "e2a315b8-20db-461a-86ad-df1b47632836",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HeavyAttack",
+                    "type": "Button",
+                    "id": "e41e88c5-ccfa-4b77-8ee7-e61d9a199397",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "69d9072c-b171-4220-a700-02158ebb9820",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -107,7 +125,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack",
+                    "action": "LightAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ac83f43c-735a-455e-be44-4bcee0dd24cb",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "01ff103e-7db2-426f-8c37-5f7778b11c18",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HeavyAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
