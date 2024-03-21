@@ -1,4 +1,5 @@
 using System.Collections;
+using _Scripts.Components;
 using _Scripts.MapGeneration;
 using _Scripts.Weapons;
 using UnityEngine;
@@ -41,7 +42,7 @@ namespace _Scripts.PlayerScripts
 
         private void Update()
         {
-            _spriteRenderer.sortingOrder = -(int)(transform.position.y * MapGenerator.SortingDiscretion);
+            _spriteRenderer.sortingOrder = -(int)(transform.position.y * RenderSorting.SortingDiscretion) + 3;
         }
 
         public void SetVector(Vector2 vector)

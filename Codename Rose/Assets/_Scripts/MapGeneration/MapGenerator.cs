@@ -1,6 +1,8 @@
+using _Scripts.Components;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
+
 
 namespace _Scripts.MapGeneration
 {
@@ -8,15 +10,21 @@ namespace _Scripts.MapGeneration
     {
         [SerializeField] private int _mapSize;
         [SerializeField] private int _chunkSize;
+        [SerializeField] private int _seed;
         [SerializeField] private Tilemap _map;
         [SerializeField] private Biome[] _biomes;
-        
+        [SerializeField] private RenderSorting _renderSorting;
+
         private static readonly int Int16MinValue = -32768;
         public static readonly int SortingDiscretion = 4;
 
+        private System.Random _random;
+
         private void Start()
         {
+            _random = new System.Random(_seed);
             GenerateMap();
+            _renderSorting.SetSortingLayer();
         }
 
         [ContextMenu("GenerateMap")]
@@ -43,58 +51,82 @@ namespace _Scripts.MapGeneration
             {
                 for (int j = x0; j < x1; j++)
                 {
-                    var vector = new Vector3Int(i, j, 0);
+                    var vector = new Vector3Int(i, j);
                     _map.SetTile(vector, biome.GroundTile);
                 }
             }
 
-            GenerateCollectablePant(x0, y0, x1, y1, biome);
-            GenerateGrass(x0, y0, x1, y1, biome);
-            GenerateTrees(x0, y0, x1, y1, biome);
+            GeneratePlants(_biomes[0], x0, y0, x1, y1);
+            GenerateGrass(_biomes[0], x0, y0, x1, y1);
         }
 
-        private void GenerateTrees(int x0, int y0, int x1, int y1, Biome biome)
+        private void GenerateGrass(Biome biome, int x0, int y0, int x1, int y1)
         {
-            for (int i = 0; i < biome.TreesPerChunk; i++)
+            var width = y1 - y0;
+
+
+            var noiseMap = Noise.GenerateNoiseMap(width, width, (float)_random.NextDouble());
+            var offSetX = Noise.GenerateNoiseMap(width, width, (float)_random.NextDouble());
+            var offSetY = Noise.GenerateNoiseMap(width, width, (float)_random.NextDouble());
+
+            int i = 0;
+            for (int indexY = y0; indexY < y1; indexY++)
             {
-                var position = GetVector(x0, y0, x1, y1);
-                var obj = Instantiate(biome.Trees[Random.Range(0, biome.Trees.Length)], position, Quaternion.identity);
-                
-                var renderer = obj.GetComponent<SpriteRenderer>();
-                renderer.sortingOrder = -(int)(obj.transform.position.y*SortingDiscretion);
+                int j = 0;
+                for (int indexX = x0; indexX < x1; indexX++)
+                {
+                    var position = new Vector2(
+                        indexX + offSetX[j, i] * _random.Next(-biome.GrassScarsity, biome.GrassScarsity),
+                        indexY + offSetY[j, i] * _random.Next(-biome.GrassScarsity, biome.GrassScarsity));
+                    if (position.x > x1 || position.x < x0 || position.y > y1 || position.y < y0)
+                    {
+                        j++;
+                        continue;
+                    }
+
+                    var obj = Instantiate(biome.Grass[ _random.Next(0,biome.Grass.Length)], position, Quaternion.identity);
+                   
+
+                    var spriteRenderer = obj.GetComponent<SpriteRenderer>();
+                    spriteRenderer.sortingLayerID = SortingLayer.NameToID("Grass");;
+                    spriteRenderer.sortingOrder = Int16MinValue;
+                    j++;
+                }
+
+                i++;
             }
         }
 
-        private void GenerateGrass(int x0, int y0, int x1, int y1, Biome biome)
+        private void GeneratePlants(Biome biome, int x0, int y0, int x1, int y1)
         {
-            for (int i = 0; i < biome.GrassPerChunk; i++)
+            var width = y1 - y0;
+            var offSetX = Noise.GenerateNoiseMap(width, width, (float)_random.NextDouble());
+            var offSetY = Noise.GenerateNoiseMap(width, width, (float)_random.NextDouble());
+            int i = 0;
+            for (int indexY = y0; indexY < y1; indexY++)
             {
-                var position = GetVector(x0, y0, x1, y1);
-                var obj = Instantiate(biome.Grass[Random.Range(0, biome.Grass.Length)], position, Quaternion.identity);
-                var renderer = obj.GetComponent<SpriteRenderer>();
-                renderer.sortingOrder = Int16MinValue;
-            }
-        }
+                int j = 0;
+                for (int indexX = x0; indexX < x1; indexX++)
+                {
+                    var position = new Vector2(
+                        indexX + offSetX[j, i] * _random.Next(-biome.PlantScarsity, biome.PlantScarsity),
+                        indexY + offSetY[j, i] * _random.Next(-biome.PlantScarsity, biome.PlantScarsity));
+                    if (position.x > x1 || position.x < x0 || position.y > y1 || position.y < y0)
+                    {
+                        j++;
+                        continue;
+                    }
 
-        private void GenerateCollectablePant(int x0, int y0, int x1, int y1, Biome biome)
-        {
-            for (int i = 0; i < biome.CollectablePlantsPerChunk; i++)
-            {
-                var position = GetVector(x0, y0, x1, y1);
-                var obj = Instantiate(biome.CollectablePlants[Random.Range(0, biome.CollectablePlants.Length)],
-                    position,
-                    Quaternion.identity);
-                var renderer = obj.GetComponent<SpriteRenderer>();
-                renderer.sortingOrder = -(int)(obj.transform.position.y*SortingDiscretion);
-            }
-        }
+                    var obj = Instantiate(biome.DecorativePlants[_random.Next(0,biome.DecorativePlants.Length)],
+                        position, Quaternion.identity);
 
-        private Vector3 GetVector(int x0, int y0, int x1, int y1)
-        {
-            var offsetX = Random.Range(x0, (float)x1);
-            var offsetY = Random.Range(y0, (float)y1);
-            var position = new Vector3(offsetX, offsetY, 0);
-            return position;
+                   // var spriteRenderer = obj.GetComponent<SpriteRenderer>();
+                    //spriteRenderer.sortingOrder = Int16MinValue + 1;
+                    j++;
+                }
+
+                i++;
+            }
         }
     }
 }
