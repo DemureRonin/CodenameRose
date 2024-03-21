@@ -6,11 +6,12 @@ namespace _Scripts.Components.Health
     {
         [SerializeField] private int _damage = 1;
 
-        public void ModifyHealth(GameObject recipient)
+      
+        public void ModifyHealth(GameObject recipient, GameObject attacker)
         {
             var healthComponent = recipient.GetComponent<HealthComponent>();
             if (healthComponent == null) return;
-            healthComponent.TakeDamage(_damage);
+            healthComponent.TakeDamage(_damage,attacker);
         }
     }
 }

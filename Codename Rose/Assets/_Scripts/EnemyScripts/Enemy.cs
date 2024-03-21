@@ -1,25 +1,19 @@
 using System.Collections;
+using _Scripts.Components.Health;
+using _Scripts.Creatures;
 using UnityEngine;
 
 namespace _Scripts.EnemyScripts
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : Creature
     {
-        [SerializeField] private float _movementSpeed;
-        [SerializeField] private float _attackDelayTime;
-        [SerializeField] private float _sphere1AttackOffset;
-        [SerializeField] private float _playerThreshold;
-        [SerializeField] private GameObject _sphereProjectile;
-
-        private Transform _player;
+        [SerializeField] private GameObject _vision;
+        [SerializeField] private HealthComponent _healthComponent;
+        private Transform _target;
         private Coroutine _coroutine;
         private WaitForSeconds _attackDelay;
         private bool _isAgro;
-
-        private void Awake()
-        {
-            _attackDelay = new WaitForSeconds(_attackDelayTime);
-        }
+        private bool _suddenDamage;
 
         private void StartState(IEnumerator state)
         {
@@ -32,54 +26,32 @@ namespace _Scripts.EnemyScripts
             _coroutine = StartCoroutine(state);
         }
 
-        public void OnSeePlayer(GameObject player)
+        public void OnSeeEnemy(GameObject target)
         {
             if (_isAgro) return;
             _isAgro = true;
-            _player = player.transform;
+            _target = target.transform;
 
-            StartState(Attack());
-            StartCoroutine(Move());
+            StartCoroutine(MoveToTarget());
         }
 
-        private IEnumerator Move()
+        public void OnSuddenDamage()
+        {
+            if (_isAgro) return;
+            _isAgro = true;
+            _target = _healthComponent.Attacker.transform;
+
+            _vision.SetActive(false);
+            StartCoroutine(MoveToTarget());
+        }
+
+        private IEnumerator MoveToTarget()
         {
             while (_isAgro)
             {
-                var position = transform.position;
-                var distanceBetweenPlayer = Vector2.Distance(_player.position, position);
-                Vector2 direction = distanceBetweenPlayer > _playerThreshold ? (_player.position - position).normalized : (position - _player.position).normalized;
+                _movementVector = (_target.transform.position - transform.position).normalized;
 
-
-                var destination = (Vector2)position + direction;
-                while ((Vector2)transform.position != destination)
-                {
-                    transform.position = Vector2.MoveTowards(transform.position, destination,
-                        _movementSpeed);
-                    yield return null;
-                }
-
-                yield return new WaitForSeconds(Random.Range(2f,5f));
-            }
-        }
-
-        private IEnumerator Attack()
-        {
-            while (true)
-            {
-                var position = transform.position;
-                Vector2[] attackPositions =
-                {
-                    position,
-                    /*new(position.x + _sphere1AttackOffset, position.y),
-                    new(position.x - _sphere1AttackOffset, position.y),*/
-                };
-                foreach (var projectilePosition in attackPositions)
-                {
-                    Instantiate(_sphereProjectile, projectilePosition, Quaternion.identity);
-                }
-
-                yield return _attackDelay;
+                yield return null;
             }
         }
     }

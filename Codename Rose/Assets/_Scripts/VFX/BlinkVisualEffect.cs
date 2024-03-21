@@ -5,16 +5,13 @@ namespace _Scripts.VFX
 {
     public class BlinkVisualEffect : MonoBehaviour
     {
-        [SerializeField] private int _alphaIncrement;
-        [SerializeField] private int _minAlpha;
-        [SerializeField] private float _updateFrequency;
-        
-        private SpriteRenderer _spriteRenderer;
-        private WaitForSeconds _delay;
+        private const int AlphaIncrement = 10;
+        private const int MinAlpha = 0;
+
+         private SpriteRenderer _spriteRenderer;
 
         private void Awake()
         {
-            _delay = new WaitForSeconds(_updateFrequency);
             _spriteRenderer = GetComponentInParent<SpriteRenderer>();
         }
 
@@ -28,12 +25,12 @@ namespace _Scripts.VFX
             var initialColor = _spriteRenderer.color;
             float tick = 0f;
             
-            var minAlpha = new Color(initialColor.r,initialColor.g,initialColor.b,_minAlpha);
+            var minAlpha = new Color(initialColor.r,initialColor.g,initialColor.b,MinAlpha);
             _spriteRenderer.color = minAlpha;
             
             while (_spriteRenderer.color != initialColor)
             {
-                tick += Time.deltaTime * _alphaIncrement;
+                tick += Time.deltaTime * AlphaIncrement;
                 _spriteRenderer.color = Color.Lerp(minAlpha, initialColor, tick);
                 yield return null;
             }

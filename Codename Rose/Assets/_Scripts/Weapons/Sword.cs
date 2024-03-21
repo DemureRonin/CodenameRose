@@ -69,11 +69,11 @@ namespace _Scripts.Weapons
                 FollowPlayer();
             }
 
-            if (!_isAttacking)
+            if (!_isAttacking && _isInCombat)
                 RotateToCursor();
         }
 
-        public override void Attack(AttackTypes attackType)
+        public override void Attack(AttackTypes attackType, Vector2 mousePosition = default)
         {
             if (_isAttacking)
             {
@@ -85,24 +85,8 @@ namespace _Scripts.Weapons
             _isInCombat = true;
             _stateSwitchTimer.StartTimer();
             transform.position = Vector2.MoveTowards(transform.position, _lastAttackPosition, 90);
-            var mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
-            switch (attackType)
-            {
-                case AttackTypes.Light:
-                    StartCoroutine(LightAttack(mousePosition));
-                    break;
-                case AttackTypes.Heavy:
-                    StartCoroutine(HeavyAttack(mousePosition));
-                    break;
-            }
-        }
-
-        public override void Attack(AttackTypes attackType, Vector2 mousePosition)
-        {
-            _isAttacking = true;
-            _isInCombat = true;
-            _stateSwitchTimer.StartTimer();
-            transform.position = Vector2.MoveTowards(transform.position, _lastAttackPosition, 90);
+            if (mousePosition == default)
+                mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
             switch (attackType)
             {
                 case AttackTypes.Light:
@@ -171,7 +155,7 @@ namespace _Scripts.Weapons
 
             for (int i = 0; i < numHits; i++)
             {
-                _modifyHealthComponent.ModifyHealth(hits[i].collider.gameObject);
+                _modifyHealthComponent.ModifyHealth(hits[i].collider.gameObject, _player.gameObject);
             }
 
             _canDamage = false;

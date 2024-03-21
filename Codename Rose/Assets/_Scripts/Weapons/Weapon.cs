@@ -15,8 +15,7 @@ namespace _Scripts.Weapons
         [SerializeField] protected ModifyHealthComponent _modifyHealthComponent;
         
         [SerializeField] protected LayerMask _layerToHit;
-        public abstract void Attack(AttackTypes attackType);
-        public abstract void Attack(AttackTypes attackType, Vector2 mousePosition);
+        public abstract void Attack(AttackTypes attackType,Vector2 mousePosition = default);
         public abstract void FollowPlayer();
         public abstract IEnumerator LightAttack(Vector2 mousePosition);
         public abstract IEnumerator HeavyAttack(Vector2 mousePosition);

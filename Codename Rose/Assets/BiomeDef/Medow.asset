@@ -35,7 +35,7 @@ MonoBehaviour:
   - {fileID: 4370214411435656310, guid: ef23d2c61c70d814e8858ff1c519291e, type: 3}
   - {fileID: 6968381248447926338, guid: 683da542be7809947a0f7742ca05eac9, type: 3}
   _collectablePlants: []
-  _plantScarsity: 30
+  _plantScarsity: 50
   _decorativePlants:
   - {fileID: 4529770733743606748, guid: 245770cab72bd1f4093db35a5f4fbbe0, type: 3}
   - {fileID: 8309575742906519013, guid: 108ff68abbd36404abfcae747b5814e0, type: 3}
