@@ -1,4 +1,5 @@
 ﻿using System;
+using _Scripts.VFX;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,6 +11,7 @@ namespace _Scripts.Components.Health
         [SerializeField] private UnityEvent _onDamage;
         [SerializeField] private UnityEvent _onDie;
         [SerializeField] private bool _immortal;
+        [SerializeField] private DamagePopUp _damagePopUp;
 
         private GameObject _attacker;
 
@@ -35,6 +37,7 @@ namespace _Scripts.Components.Health
             }
 
             _onDamage?.Invoke();
+            _damagePopUp.SpawnDamagePopUp(damage);
         }
     }
 }
