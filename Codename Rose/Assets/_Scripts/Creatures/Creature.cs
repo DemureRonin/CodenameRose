@@ -14,6 +14,8 @@ namespace _Scripts.Creatures
 
         protected Vector2 _movementVector;
         protected Vector2 _lookDirection;
+        private static readonly int XDirection = Animator.StringToHash("xDirection");
+        private static readonly int YDirection = Animator.StringToHash("yDirection");
 
         public Vector2 MovementVector => _movementVector;
         public Vector2 LookDirection => _lookDirection;
@@ -29,7 +31,8 @@ namespace _Scripts.Creatures
         protected virtual void FixedUpdate()
         {
             _rigidbody.velocity = new Vector2(_movementVector.x * _movementSpeed, _movementVector.y * _movementSpeed);
-            //  Animate();
+
+            Animate();
         }
 
         private void Update()
@@ -44,25 +47,8 @@ namespace _Scripts.Creatures
 
         private void Animate()
         {
-            switch (_movementVector.y)
-            {
-                case > 0:
-                    _animator.Play("back_idle");
-                    break;
-                case < 0:
-                    _animator.Play("forward_idle");
-                    break;
-                default:
-                {
-                    if (_movementVector.x != 0)
-                    {
-                        _animator.Play("right_idle");
-                        transform.localScale = new Vector3(_movementVector.x, 1, 1);
-                    }
-
-                    break;
-                }
-            }
+            _animator.SetFloat(XDirection, _rigidbody.velocity.x);
+            _animator.SetFloat(YDirection, _rigidbody.velocity.y);
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using _Scripts.Components.Health;
+﻿using _Scripts.Components.Health;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Scripts.Weapons
 {
@@ -8,18 +8,13 @@ namespace _Scripts.Weapons
     {
         [SerializeField] protected float _followSpeed;
         [SerializeField] protected float _idleTimeToSwitchState;
-        [SerializeField] protected float _maxAttackDistance;
         [SerializeField] protected float _attackSpeed;
         
         [SerializeField] protected Animator _weaponAnimator;
-        [SerializeField] protected ModifyHealthComponent _modifyHealthComponent;
+        [FormerlySerializedAs("_modifyHealthComponent")] [SerializeField] protected SwordModifyHealthComponent _swordModifyHealthComponent;
         
         [SerializeField] protected LayerMask _layerToHit;
         public abstract void Attack(AttackTypes attackType,Vector2 mousePosition = default);
-        public abstract void FollowPlayer();
-        public abstract IEnumerator LightAttack(Vector2 mousePosition);
-        public abstract IEnumerator HeavyAttack(Vector2 mousePosition);
-        
     }
 
     public enum AttackTypes

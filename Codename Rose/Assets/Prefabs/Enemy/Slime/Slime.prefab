@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2421663687689480315}
   - component: {fileID: 7181192108715014812}
   - component: {fileID: 2736088558679465144}
+  - component: {fileID: 2858672256713931060}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -95,12 +96,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 061bbb8567a3c3c408a7169c8b17cdfd, type: 3}
+  m_Sprite: {fileID: 731462340, guid: 061bbb8567a3c3c408a7169c8b17cdfd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 0.875, y: 0.6875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -142,8 +143,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
-    newSize: {x: 2, y: 2}
+    oldSize: {x: 0.875, y: 0.6875}
+    newSize: {x: 0.875, y: 0.6875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -178,6 +179,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &2858672256713931060
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991675611393774544}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bd8c721ba3a96c446af621574ae7ace5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1000746233001038014
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,22 +467,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2673320b840c456fba7437ce741dff0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 10
+  _health: 120
   _onDamage:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2574288223587223067}
-        m_TargetAssemblyTypeName: _Scripts.VFX.BlinkVisualEffect, Assembly-CSharp
-        m_MethodName: Blink
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1213205043076480019}
         m_TargetAssemblyTypeName: _Scripts.EnemyScripts.Enemy, Assembly-CSharp
         m_MethodName: OnSuddenDamage
@@ -489,7 +499,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _immortal: 0
-  _damagePopUp: {fileID: 2688743158216974993}
 --- !u!114 &2574288223587223067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -514,8 +523,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfd2d5cb940d4953a7daa2a1ab3c735a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _destroyThisGameObject: 0
   _objectToDestroy: {fileID: 991675611393774544}
+  _destroyThisGameObject: 0
+  _destroyOnStartWithTime: 0
+  _destroyTime: 0
 --- !u!114 &2688743158216974993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -528,4 +539,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fef1960ae8681794e8dcf7920497aa1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damagePopUpPrefab: {fileID: 8359501524239518852, guid: dfa0efc40413f19479f477c233e31d68, type: 3}
