@@ -37,6 +37,9 @@ namespace _Scripts.Creatures
 
         private void Update()
         {
+            if (_rigidbody.velocity != Vector2.zero)
+                _lookDirection = _rigidbody.velocity;
+
             SortOrderInLayer();
         }
 
@@ -47,8 +50,8 @@ namespace _Scripts.Creatures
 
         private void Animate()
         {
-            _animator.SetFloat(XDirection, _rigidbody.velocity.x);
-            _animator.SetFloat(YDirection, _rigidbody.velocity.y);
+            _animator.SetFloat(XDirection, _lookDirection.x);
+            _animator.SetFloat(YDirection, _lookDirection.y);
         }
     }
 }

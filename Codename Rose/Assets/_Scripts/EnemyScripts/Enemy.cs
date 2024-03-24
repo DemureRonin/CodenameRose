@@ -14,6 +14,8 @@ namespace _Scripts.EnemyScripts
         private WaitForSeconds _attackDelay;
         private bool _isAgro;
         private bool _suddenDamage;
+        private bool _attacking;
+        private static readonly int Attack = Animator.StringToHash("projectileAttack");
 
         private void StartState(IEnumerator state)
         {
@@ -26,6 +28,7 @@ namespace _Scripts.EnemyScripts
             _coroutine = StartCoroutine(state);
         }
 
+     
         public void OnSeeEnemy(GameObject target)
         {
             if (_isAgro) return;
@@ -33,6 +36,7 @@ namespace _Scripts.EnemyScripts
             _target = target.transform;
 
             StartCoroutine(MoveToTarget());
+            StartCoroutine(AttackChance());
         }
 
         public void OnSuddenDamage()
@@ -42,7 +46,35 @@ namespace _Scripts.EnemyScripts
             _target = _healthComponent.Attacker.transform;
 
             _vision.SetActive(false);
-            StartCoroutine(MoveToTarget());
+            StartState(MoveToTarget());
+            StartCoroutine(AttackChance());
+        }
+
+        private IEnumerator AttackChance()
+        {
+            while (!_attacking)
+            {
+                var rand = Random.value;
+                if (rand > 0.8f)
+                {
+                    StartState(ProjectileAttack());
+                }
+
+                yield return new WaitForSeconds(2f);
+            }
+           
+        }
+
+        private IEnumerator ProjectileAttack()
+        {
+            _attacking = true;
+            _animator.SetTrigger(Attack);
+            _movementVector = Vector2.zero;
+            yield return new WaitForSeconds(1f);
+            _attacking = false;
+             StartState(MoveToTarget());
+            StartCoroutine(AttackChance());
+            
         }
 
         private IEnumerator MoveToTarget()

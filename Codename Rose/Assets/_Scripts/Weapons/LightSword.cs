@@ -32,12 +32,11 @@ namespace _Scripts.Weapons
         private Transform _followTargetPosition;
         private Hero _player;
 
-       
+
         private bool _isAttacking;
         private bool _canAttack;
         private bool _canEnqueue = true;
 
-       
 
         private void Awake()
         {
@@ -99,7 +98,7 @@ namespace _Scripts.Weapons
 
         private IEnumerator EnqueueAttack(AttackTypes attackType)
         {
-            if (_enqueuedAttacks.Count >= 1)
+            if (_enqueuedAttacks.Count >= 2)
             {
                 _canEnqueue = false;
             }
@@ -163,7 +162,8 @@ namespace _Scripts.Weapons
 
             for (int i = 0; i < numHits; i++)
             {
-                _swordModifyHealthComponent.ModifyHealth(hits[i].collider.gameObject, _player.gameObject,initialPosition, transform.position );
+                _swordModifyHealthComponent.ModifyHealth(hits[i].collider.gameObject, _player.gameObject,
+                    initialPosition, transform.position, AttackTypes.Light);
             }
         }
 
@@ -176,7 +176,8 @@ namespace _Scripts.Weapons
 
             for (int i = 0; i < numHits; i++)
             {
-                _swordModifyHealthComponent.ModifyHealth(hits[i].collider.gameObject, _player.gameObject,initialPosition, transform.position);
+                _swordModifyHealthComponent.ModifyHealth(hits[i].collider.gameObject, _player.gameObject,
+                    initialPosition, transform.position, AttackTypes.Heavy);
             }
         }
 
