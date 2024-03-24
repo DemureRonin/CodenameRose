@@ -9,6 +9,7 @@ namespace _Scripts.EnemyScripts
     {
         [SerializeField] private GameObject _vision;
         [SerializeField] private HealthComponent _healthComponent;
+        [SerializeField] private Transform _projectilePosition;
         private Transform _target;
         private Coroutine _coroutine;
         private WaitForSeconds _attackDelay;
@@ -16,6 +17,8 @@ namespace _Scripts.EnemyScripts
         private bool _suddenDamage;
         private bool _attacking;
         private static readonly int Attack = Animator.StringToHash("projectileAttack");
+        [SerializeField] private GameObject _projectilePrefab;
+        [SerializeField] private AnimationClip _projectileAttackClip;
 
         private void StartState(IEnumerator state)
         {
@@ -28,7 +31,7 @@ namespace _Scripts.EnemyScripts
             _coroutine = StartCoroutine(state);
         }
 
-     
+
         public void OnSeeEnemy(GameObject target)
         {
             if (_isAgro) return;
@@ -62,6 +65,10 @@ namespace _Scripts.EnemyScripts
 
                 yield return new WaitForSeconds(2f);
             }
+        }
+
+        public void SpawnProjectile()
+        {
            
         }
 
@@ -70,11 +77,12 @@ namespace _Scripts.EnemyScripts
             _attacking = true;
             _animator.SetTrigger(Attack);
             _movementVector = Vector2.zero;
+            yield return new WaitForSeconds(_projectileAttackClip.length);
+            Instantiate(_projectilePrefab, _projectilePosition.position, Quaternion.identity);
             yield return new WaitForSeconds(1f);
             _attacking = false;
-             StartState(MoveToTarget());
+            StartState(MoveToTarget());
             StartCoroutine(AttackChance());
-            
         }
 
         private IEnumerator MoveToTarget()

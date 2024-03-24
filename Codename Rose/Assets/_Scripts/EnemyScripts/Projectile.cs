@@ -6,20 +6,26 @@ using Vector2 = UnityEngine.Vector2;
 
 namespace _Scripts.EnemyScripts
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class Projectile : MonoBehaviour
     {
         [SerializeField] private float _bulletSpeed;
         [SerializeField] private float _bulletLifeTime;
         [SerializeField] private float _startCooldown;
 
+        private Rigidbody2D _rigidbody;
         private Hero _target;
         private Vector2 _targetPosition;
         private Timer _startTimer;
         private Timer _lifeTimer;
+        private Vector2 _direction;
+
         private void Awake()
         {
+            _rigidbody = GetComponent<Rigidbody2D>();
+            _rigidbody.gravityScale = 0;
+            _rigidbody.freezeRotation = true;
             _target = FindAnyObjectByType<Hero>();
-            _targetPosition = _target.transform.position;
             _startTimer = new Timer
             {
                 Value = _startCooldown
@@ -30,28 +36,26 @@ namespace _Scripts.EnemyScripts
             };
             _startTimer.StartTimer();
             _lifeTimer.StartTimer();
+            _direction = (_target.transform.position - transform.position).normalized * _bulletSpeed;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (_lifeTimer.IsReady)
             {
                 Destroy(gameObject);
             }
-            if (!_startTimer.IsReady)
-            {
-                _targetPosition = _target.transform.position;
-                return;
-            }
-            
+
+
+           
+
+
             GoToTarget();
         }
 
         private void GoToTarget()
         {
-            var projectilePosition = transform.position;
-          
-            transform.position = Vector2.MoveTowards( projectilePosition, _targetPosition, _bulletSpeed);
+            _rigidbody.velocity = _direction;
         }
     }
 }
