@@ -21,6 +21,7 @@ namespace _Scripts.PlayerScripts
         protected override void FixedUpdate()
         {
             if (_isDashing) return;
+            _movementSpeed = _equippedWeapon.IsInCombat ? 1.2f :2.3f; 
             base.FixedUpdate();
         }
         public void SetVector(Vector2 vector)

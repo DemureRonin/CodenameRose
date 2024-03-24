@@ -15,6 +15,8 @@ namespace _Scripts.Weapons
         
         [SerializeField] protected LayerMask _layerToHit;
         public abstract void Attack(AttackTypes attackType,Vector2 mousePosition = default);
+        protected bool _isInCombat;
+        public bool IsInCombat => _isInCombat;
     }
 
     public enum AttackTypes
