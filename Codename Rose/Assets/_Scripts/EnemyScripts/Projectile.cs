@@ -47,9 +47,6 @@ namespace _Scripts.EnemyScripts
             }
 
 
-           
-
-
             GoToTarget();
         }
 

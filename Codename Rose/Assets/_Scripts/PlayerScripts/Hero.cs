@@ -1,5 +1,6 @@
 using System.Collections;
 using _Scripts.Creatures;
+using _Scripts.Creatures.CreatureDef;
 using _Scripts.Weapons;
 using UnityEngine;
 
@@ -7,52 +8,53 @@ namespace _Scripts.PlayerScripts
 {
     public class Hero : Creature
     {
-        [SerializeField] private float _dashSpeed;
-
+        [SerializeField] private HeroParameterDef _heroParameterDef;
         [SerializeField] private LayerMask _collectableLayer;
         [SerializeField] private Weapon _equippedWeapon;
 
+        private float DashSpeed => _heroParameterDef.DashSpeed;
+        private float CollectRadius => _heroParameterDef.CollectRadius;
 
-        private float _radius = 1;
         private Collider2D[] _interactionResult;
         private bool _isDashing;
 
-
+        protected override void Awake()
+        {
+            InitializeParameters(_heroParameterDef);
+            base.Awake();
+        }
+        
         protected override void FixedUpdate()
         {
             if (_isDashing) return;
-            _movementSpeed = _equippedWeapon.IsInCombat ? 1.2f :2.3f; 
             base.FixedUpdate();
         }
+
         public void SetVector(Vector2 vector)
         {
-            _movementVector = vector;
+            MovementVector = vector;
             if (vector != Vector2.zero)
             {
-                _lookDirection = vector;
+                LookDirection = vector;
             }
         }
 
-
         public void CheckCollectableObjects()
         {
-            var size = Physics2D.OverlapCircle(transform.position, _radius, _collectableLayer);
+            var size = Physics2D.OverlapCircle(transform.position, CollectRadius, _collectableLayer);
             if (size == null) return;
             var coll = size.gameObject.GetComponent<Collectable.Collectable>();
             coll.Collect();
         }
 
-        public void Attack(AttackTypes attackType)
-        {
-            _equippedWeapon.Attack(attackType);
-        }
+        public void Attack(AttackTypes attackType) => _equippedWeapon.OnAttack(attackType);
 
         public IEnumerator Dash()
         {
             _isDashing = true;
-            _rigidbody.AddForce(_lookDirection * _dashSpeed, ForceMode2D.Impulse);
+            RigidBody.AddForce(LookDirection * DashSpeed, ForceMode2D.Impulse);
             yield return new WaitForSeconds(0.1f);
-            _rigidbody.velocity = Vector2.zero;
+            RigidBody.velocity = Vector2.zero;
             _isDashing = false;
         }
     }

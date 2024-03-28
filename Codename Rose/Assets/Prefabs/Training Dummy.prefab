@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6203632737751219584}
   - component: {fileID: 5545489035791967573}
   - component: {fileID: 9192018000430166244}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Training Dummy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,9 +142,11 @@ GameObject:
   - component: {fileID: 3093384845831379273}
   - component: {fileID: 6546321866815142864}
   - component: {fileID: 1513820828845932221}
-  m_Layer: 3
+  - component: {fileID: 4332207146107686863}
+  - component: {fileID: 3375515797790461831}
+  m_Layer: 8
   m_Name: HitBox
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -221,11 +223,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2673320b840c456fba7437ce741dff0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 1212
+  _health: 1
   _onDamage:
     m_PersistentCalls:
       m_Calls: []
   _onDie:
     m_PersistentCalls:
       m_Calls: []
-  _immortal: 0
+  _immortal: 1
+--- !u!114 &4332207146107686863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7273579709023874419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23e8e3341b5b4b76b1f1929ae5717ed3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3375515797790461831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7273579709023874419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fef1960ae8681794e8dcf7920497aa1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

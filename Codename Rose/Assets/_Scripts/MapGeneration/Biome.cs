@@ -13,9 +13,18 @@ namespace _Scripts.MapGeneration
         [SerializeField] private GameObject[] _grass;
 
         [SerializeField] private GameObject[] _collectablePlants;
-        
+
         [Range(1, 100)] [SerializeField] private int _plantScarsity;
         [SerializeField] private GameObject[] _decorativePlants;
+
+        [SerializeField] private GameObject[] _creatureGroups;
+
+        public GameObject[] CreatureGroups => _creatureGroups;
+        [SerializeField] private int _biomeSize;
+
+        public string BiomeName => _biomeName;
+
+        public int BiomeSize => _biomeSize;
 
 
         public int GrassScarsity => _grassScarsity;

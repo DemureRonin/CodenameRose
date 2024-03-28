@@ -20,7 +20,7 @@ namespace _Scripts.VFX
         {
             _text.text = damage.ToString(CultureInfo.InvariantCulture);
 
-            Instantiate(_damagePopUpPrefab, transform.position, Quaternion.identity);
+            Instantiate(_damagePopUpPrefab, (Vector2)transform.position + Vector2.right/2, Quaternion.identity);
         }
     }
 }

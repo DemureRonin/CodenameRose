@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using _Scripts.MapGeneration;
@@ -15,7 +16,9 @@ namespace _Scripts.Weapons
         [SerializeField] private AnimationClip _lightAttackClip;
         [SerializeField] private AnimationClip _heavyAttackClip;
 
-        private List<Attack> _enqueuedAttacks = new();
+        private readonly List<Attack> _combo = new();
+        private readonly int _maxCombo = 4;
+        private int _comboCounter = 0;
 
         private WaitForSeconds _lightAttackDelay;
         private WaitForSeconds _heavyAttackDelay;
@@ -24,8 +27,8 @@ namespace _Scripts.Weapons
         private Vector2 _initialSwordPosition;
         private Vector2 _mousePosition;
 
-        private Timer _stateSwitchTimer;
-        private Timer _comboTimer;
+        private readonly Timer _stateSwitchTimer = new();
+        private Timer _comboTimer = new();
         private Camera _camera;
 
         private SpriteRenderer _spriteRenderer;
@@ -35,7 +38,7 @@ namespace _Scripts.Weapons
 
         private bool _isAttacking;
         private bool _canAttack;
-        private bool _canEnqueue = true;
+        private bool _canCombo = true;
 
 
         private void Awake()
@@ -48,10 +51,14 @@ namespace _Scripts.Weapons
 
         private void Start()
         {
-            _stateSwitchTimer = new Timer();
             _player = FindAnyObjectByType<Hero>();
             _followTargetPosition = _player.transform;
             _stateSwitchTimer.Value = _idleTimeToSwitchState;
+        }
+
+        private void FixedUpdate()
+        {
+            
         }
 
         private void Update()
@@ -66,25 +73,53 @@ namespace _Scripts.Weapons
             {
                 UpdateIdleDirection();
                 FollowPlayer();
+                ResetCombo();
             }
 
             if (!_isAttacking && _isInCombat)
                 RotateToCursor();
         }
 
-        public override void Attack(AttackTypes attackType, Vector2 mousePosition = default)
+        private void ResetCombo()
         {
-            if (_isAttacking)
-            {
-                StartCoroutine(EnqueueAttack(attackType));
-                return;
-            }
+            _comboCounter = 0;
+            _canCombo = true;
+        }
 
-            _isAttacking = true;
+        public override void OnAttack(AttackTypes attackType)
+        {
+            if (!_canCombo) return;
+            if (attackType == AttackTypes.Heavy && _comboCounter != _maxCombo - 1) return;
             _isInCombat = true;
             _stateSwitchTimer.StartTimer();
+            _comboCounter++;
+
+            StartCoroutine(AddComboAttack(attackType));
+        }
+
+        private IEnumerator AddComboAttack(AttackTypes attackType)
+        {
+            if (_comboCounter >= _maxCombo)
+            {
+                _canCombo = false;
+            }
+            var mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
+            var attack = new Attack(attackType, mousePosition);
+            _combo.Add(attack);
+
+            yield return new WaitUntil(() => !_isAttacking);
+
+            Attack(_combo[0].AttackType, _combo[0].Position);
+            _combo.Remove(attack);
+        }
+
+        private void Attack(AttackTypes attackType, Vector2 mousePosition = default)
+        {
+            _isAttacking = true;
+
             if (mousePosition == default)
                 mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
+
             switch (attackType)
             {
                 case AttackTypes.Light:
@@ -96,47 +131,36 @@ namespace _Scripts.Weapons
             }
         }
 
-        private IEnumerator EnqueueAttack(AttackTypes attackType)
-        {
-            if (_enqueuedAttacks.Count >= 2)
-            {
-                _canEnqueue = false;
-            }
-
-            if (!_canEnqueue) yield break;
-            var mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
-            var attack = new Attack(attackType, mousePosition);
-            _enqueuedAttacks.Add(attack);
-
-            yield return new WaitUntil(() => !_isAttacking);
-
-            Attack(_enqueuedAttacks[0].AttackType, _enqueuedAttacks[0].Position);
-            _enqueuedAttacks.Remove(_enqueuedAttacks[0]);
-            if (!_canEnqueue && _enqueuedAttacks.Count == 0) _canEnqueue = true;
-        }
 
         private IEnumerator LightAttack(Vector2 mousePosition)
         {
-            var initialPosition = transform.position;
+            _initialSwordPosition = transform.position;
             _weaponAnimator.Play("lightAttack");
             yield return _lightAttackDelay;
 
             var coroutine = StartCoroutine(GoToLocation(mousePosition));
             yield return coroutine;
-            LightAttackHitCheck(initialPosition);
+
+            LightAttackHitCheck();
+            _stateSwitchTimer.StartTimer();
             _isAttacking = false;
         }
 
         private IEnumerator HeavyAttack(Vector2 mousePosition)
         {
-            var initialPosition = transform.position;
+            _initialSwordPosition = transform.position;
             yield return _lightAttackDelay;
+
             var coroutine = StartCoroutine(GoToLocation(mousePosition));
             yield return coroutine;
+
             _weaponAnimator.Play("heavyAttack");
             yield return _heavyAttackDelay;
-            HeavyAttackHitCheck(initialPosition);
+
+            HeavyAttackHitCheck();
             yield return new WaitForSeconds(_heavyAttackClip.length - _heavyAttackDelayTime);
+            _stateSwitchTimer.StartTimer();
+
             _isAttacking = false;
         }
 
@@ -146,7 +170,7 @@ namespace _Scripts.Weapons
             {
                 Transform swordTransform;
                 (swordTransform = transform).position =
-                    Vector2.MoveTowards(transform.position, position, _attackSpeed);
+                    Vector2.MoveTowards(transform.position, position, _attackSpeed * Time.deltaTime);
                 var rotation = position - (Vector2)swordTransform.position;
                 var zRotation = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
 
@@ -155,19 +179,19 @@ namespace _Scripts.Weapons
             }
         }
 
-        private void LightAttackHitCheck(Vector2 initialPosition)
+        private void LightAttackHitCheck()
         {
             var hits = new RaycastHit2D[10];
-            var numHits = Physics2D.LinecastNonAlloc(transform.position, initialPosition, hits, _layerToHit);
+            var numHits = Physics2D.LinecastNonAlloc(transform.position, _initialSwordPosition, hits, _layerToHit);
 
             for (int i = 0; i < numHits; i++)
             {
                 _swordModifyHealthComponent.ModifyHealth(hits[i].collider.gameObject, _player.gameObject,
-                    initialPosition, transform.position, AttackTypes.Light);
+                    _initialSwordPosition, transform.position, AttackTypes.Light);
             }
         }
 
-        private void HeavyAttackHitCheck(Vector2 initialPosition)
+        private void HeavyAttackHitCheck()
         {
             var hits = new RaycastHit2D[10];
             var radius = 1.5f;
@@ -177,16 +201,9 @@ namespace _Scripts.Weapons
             for (int i = 0; i < numHits; i++)
             {
                 _swordModifyHealthComponent.ModifyHealth(hits[i].collider.gameObject, _player.gameObject,
-                    initialPosition, transform.position, AttackTypes.Heavy);
+                    _initialSwordPosition, transform.position, AttackTypes.Heavy);
             }
         }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.magenta;
-            Gizmos.DrawSphere(transform.position, 1);
-        }
-
 
         private void RotateToCursor()
         {

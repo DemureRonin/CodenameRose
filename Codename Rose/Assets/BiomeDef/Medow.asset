@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Medow
   m_EditorClassIdentifier: 
   _biomeName: Medow
-  _groundTile: {fileID: 11400000, guid: a6cb5242c9a5cae45908fc03e2ba01f0, type: 2}
+  _groundTile: {fileID: 11400000, guid: e0880844166dfe24a80d674e5f102446, type: 2}
   _grassScarsity: 1
   _grass:
   - {fileID: 687306351674500911, guid: 34e83c1e743a7a945a4077b964b39592, type: 3}
@@ -35,7 +35,7 @@ MonoBehaviour:
   - {fileID: 4370214411435656310, guid: ef23d2c61c70d814e8858ff1c519291e, type: 3}
   - {fileID: 6968381248447926338, guid: 683da542be7809947a0f7742ca05eac9, type: 3}
   _collectablePlants: []
-  _plantScarsity: 50
+  _plantScarsity: 8
   _decorativePlants:
   - {fileID: 4529770733743606748, guid: 245770cab72bd1f4093db35a5f4fbbe0, type: 3}
   - {fileID: 8309575742906519013, guid: 108ff68abbd36404abfcae747b5814e0, type: 3}
@@ -54,4 +54,5 @@ MonoBehaviour:
   - {fileID: 6859147122046481447, guid: 10987b93150692f4ea390dce79c57ac0, type: 3}
   - {fileID: 4884852610770028956, guid: addd995e53e31df4dad0a455e7590a43, type: 3}
   - {fileID: 4884852610770028956, guid: addd995e53e31df4dad0a455e7590a43, type: 3}
-  - {fileID: 6366772249226372725, guid: 54b984ec341416d418294a845bc7c44b, type: 3}
+  _creatureGroups: []
+  _biomeSize: 16

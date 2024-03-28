@@ -1,6 +1,5 @@
 ﻿using _Scripts.Weapons;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Scripts.Components.Health
 {
@@ -31,7 +30,7 @@ namespace _Scripts.Components.Health
                     break;
             }
 
-             
+
             healthComponent.TakeDamage(damage, attacker);
         }
     }

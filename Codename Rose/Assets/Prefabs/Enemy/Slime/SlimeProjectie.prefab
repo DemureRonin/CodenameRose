@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 8910426290099455619}
   - component: {fileID: 5158715417784689967}
   - component: {fileID: 4452974409168501979}
+  - component: {fileID: 5719882933993484148}
+  - component: {fileID: 8362877655993180408}
+  - component: {fileID: 3282801614514649709}
   m_Layer: 0
   m_Name: SlimeProjectie
   m_TagString: Untagged
@@ -98,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f0fe8bc70749dd8d8cc83b897fe7e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletSpeed: 10
+  _bulletSpeed: 9
   _bulletLifeTime: 5
   _startCooldown: 0
 --- !u!50 &4452974409168501979
@@ -128,3 +131,81 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &5719882933993484148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4454940746249160697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7de41009e611f14a933876bf0ada53b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actions:
+  - _otherTag: Player
+    _gameEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8362877655993180408}
+          m_TargetAssemblyTypeName: _Scripts.Components.Health.ModifyHealthComponent,
+            Assembly-CSharp
+          m_MethodName: ModifyHealth
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &8362877655993180408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4454940746249160697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c589509ba2174fe7b3c9682c592638ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damage: 3
+--- !u!58 &3282801614514649709
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4454940746249160697}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.03096962, y: 0.06709862}
+  serializedVersion: 2
+  m_Radius: 0.1948204

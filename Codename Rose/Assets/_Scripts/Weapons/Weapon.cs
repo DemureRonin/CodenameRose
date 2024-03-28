@@ -14,7 +14,7 @@ namespace _Scripts.Weapons
         [FormerlySerializedAs("_modifyHealthComponent")] [SerializeField] protected SwordModifyHealthComponent _swordModifyHealthComponent;
         
         [SerializeField] protected LayerMask _layerToHit;
-        public abstract void Attack(AttackTypes attackType,Vector2 mousePosition = default);
+        public abstract void OnAttack(AttackTypes attackType);
         protected bool _isInCombat;
         public bool IsInCombat => _isInCombat;
     }
