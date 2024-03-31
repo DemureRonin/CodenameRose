@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using _Scripts.MapGeneration;
+using _Scripts.MapGeneration.Map;
 using _Scripts.PlayerScripts;
 using _Scripts.Utils;
 using UnityEngine;
@@ -63,7 +64,7 @@ namespace _Scripts.Weapons
 
         private void Update()
         {
-            _spriteRenderer.sortingOrder = -(int)(transform.position.y * MapGenerator.SortingDiscretion) - 1;
+            _spriteRenderer.sortingOrder = -(int)(transform.position.y * MapDef.SortingDiscretion) - 1;
             if (_stateSwitchTimer.IsReady)
             {
                 _isInCombat = false;
