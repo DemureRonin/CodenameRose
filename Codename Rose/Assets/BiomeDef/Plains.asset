@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _biomeName: Plains
   _groundTile: {fileID: 11400000, guid: a6cb5242c9a5cae45908fc03e2ba01f0, type: 2}
-  "_grassScar\u0441ity": 1
+  "_grassScar\u0441ity": 2
   _grass:
   - {fileID: 687306351674500911, guid: 34e83c1e743a7a945a4077b964b39592, type: 3}
   - {fileID: 5067495436448892530, guid: 30553118b99158c4c9dbfe8525777cfc, type: 3}
@@ -34,29 +34,20 @@ MonoBehaviour:
   - {fileID: 6290524715310910516, guid: 6f722efbbfc90494d90806ec243b8e71, type: 3}
   - {fileID: 4370214411435656310, guid: ef23d2c61c70d814e8858ff1c519291e, type: 3}
   - {fileID: 6968381248447926338, guid: 683da542be7809947a0f7742ca05eac9, type: 3}
-  _collectablePlants: []
-  _plantScarsity: 159
-  _decorativePlants:
+  _decorativeObjectsScarcity: 200
+  _decorativeObjects:
   - {fileID: 4529770733743606748, guid: 245770cab72bd1f4093db35a5f4fbbe0, type: 3}
   - {fileID: 8309575742906519013, guid: 108ff68abbd36404abfcae747b5814e0, type: 3}
   - {fileID: 6436470830053752508, guid: d195762f10a88ec44a07de3a65c69da2, type: 3}
   - {fileID: 7543030727930018854, guid: e6bffc50e46a9844b9047d86cba6522e, type: 3}
-  - {fileID: 7206273769588898553, guid: 19ee025cba1b7584ab3bee564a9b7dbc, type: 3}
-  - {fileID: 6722483631740723515, guid: 62ba7fc42457d0844a824ab7b8373354, type: 3}
   - {fileID: 3092260211088880619, guid: 15f0ae369e911714098ddce4ebe045cd, type: 3}
   - {fileID: 4633676681924307743, guid: e3dbf0a957b427e4abe1889a165e8252, type: 3}
   - {fileID: 4340184268269391866, guid: a300c7f104081044a807aa182563d2ef, type: 3}
-  - {fileID: 6485743967036361687, guid: 6f5ef82f673748842bdd9f6cad4bbc53, type: 3}
   - {fileID: 251520698838215853, guid: d321814a8bc4976419773fb013377fac, type: 3}
-  - {fileID: 6391700721471705418, guid: b593418ab8c172c44bd8c712d9aa6665, type: 3}
-  - {fileID: 4758657468012154078, guid: 655df53efddd98c4abfc72a49ebe29da, type: 3}
-  - {fileID: 5808432549625640238, guid: 6f7c216da62ad8a4da4404d7465ef8bf, type: 3}
+  - {fileID: 6485743967036361687, guid: 6f5ef82f673748842bdd9f6cad4bbc53, type: 3}
   - {fileID: 6859147122046481447, guid: 10987b93150692f4ea390dce79c57ac0, type: 3}
-  - {fileID: 4884852610770028956, guid: addd995e53e31df4dad0a455e7590a43, type: 3}
-  - {fileID: 4884852610770028956, guid: addd995e53e31df4dad0a455e7590a43, type: 3}
   - {fileID: 6366772249226372725, guid: 54b984ec341416d418294a845bc7c44b, type: 3}
-  _creatureGroups: []
   _landMarks:
   - {fileID: 4143638572851937473, guid: 9d54aaef2d580c7449b20ca78cbafe38, type: 3}
   - {fileID: 2882432573146161548, guid: 4977a3006531af04c83f8a87c6516275, type: 3}
-  _checkpoint: {fileID: 8093450044577079591, guid: d54cf896cf78cbc41ae4e68853fa15ca, type: 3}
+  _checkPoint: {fileID: 8093450044577079591, guid: d54cf896cf78cbc41ae4e68853fa15ca, type: 3}

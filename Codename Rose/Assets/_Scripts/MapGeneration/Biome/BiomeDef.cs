@@ -10,35 +10,30 @@ namespace _Scripts.MapGeneration.Biome
         [SerializeField] private string _biomeName;
         [SerializeField] private TileBase _groundTile;
 
-        [FormerlySerializedAs("_grassScarsity")] [Range(1, 10)] [SerializeField] private int _grassScarсity;
+        [Range(1, 10)] [SerializeField] private int _grassScarсity;
         [SerializeField] private GameObject[] _grass;
 
-        [SerializeField] private GameObject[] _collectablePlants;
+        [Range(1, 500)] [SerializeField] private int _decorativeObjectsScarcity;
+        [SerializeField] private GameObject[] _decorativeObjects;
 
-        [Range(1, 200)] [SerializeField] private int _plantScarsity;
-        [SerializeField] private GameObject[] _decorativePlants;
-
-        [SerializeField] private GameObject[] _creatureGroups;
         [SerializeField] private GameObject[] _landMarks;
-        [SerializeField] private GameObject _checkpoint;
+        [SerializeField] private GameObject _checkPoint;
 
-        public GameObject Checkpoint => _checkpoint;
+        public int DecorativeObjectsScarcity => _decorativeObjectsScarcity;
+
+        public GameObject CheckPoint => _checkPoint;
 
         public GameObject[] LandMarks => _landMarks;
 
-        public GameObject[] CreatureGroups => _creatureGroups;
 
         public string BiomeName => _biomeName;
 
         public int GrassScarсity => _grassScarсity;
 
-        public GameObject[] DecorativePlants => _decorativePlants;
+        public GameObject[] DecorativeObjects => _decorativeObjects;
 
         public TileBase GroundTile => _groundTile;
 
         public GameObject[] Grass => _grass;
-
-        public GameObject[] CollectablePlants => _collectablePlants;
-        public int PlantScarsity => _plantScarsity;
     }
 }

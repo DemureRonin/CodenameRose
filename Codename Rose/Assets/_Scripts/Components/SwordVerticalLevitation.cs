@@ -6,7 +6,7 @@ namespace _Scripts.Components
 {
     public class SwordVerticalLevitation : VerticalLevitation
     {
-        [FormerlySerializedAs("_sword")] [SerializeField] private LightSword _lightSword;
+        [SerializeField] private LightSword _lightSword;
 
         protected override void Update()
         {

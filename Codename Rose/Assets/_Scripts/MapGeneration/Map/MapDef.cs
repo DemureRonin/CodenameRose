@@ -4,13 +4,21 @@ namespace _Scripts.MapGeneration.Map
 {
     public static class MapDef
     {
-        public static readonly int Seed = 13;
+        public static int Seed => GenerateRandomSeed();
 
-        public static readonly int NumOfBiomes = 8;
+        public static readonly int NumOfBiomes = 5;
 
         public static readonly int SortingDiscretion = 5;
 
-        public static readonly int BiomeSize = 128;
-        public static readonly BiomeObject[,] Biomes = new BiomeObject[NumOfBiomes,NumOfBiomes];
+        public static readonly int BiomeSize = 100;
+        public static readonly int ChunkSize = 5;
+        public static readonly BiomeObject[,] Biomes = new BiomeObject[NumOfBiomes, NumOfBiomes];
+
+        private static int GenerateRandomSeed()
+        {
+            var rand = new System.Random();
+            var seed = rand.Next(0, int.MaxValue);
+            return seed;
+        }
     }
 }
