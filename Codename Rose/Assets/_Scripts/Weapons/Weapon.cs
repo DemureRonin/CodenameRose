@@ -9,10 +9,10 @@ namespace _Scripts.Weapons
         [SerializeField] protected float _followSpeed;
         [SerializeField] protected float _idleTimeToSwitchState;
         [SerializeField] protected float _attackSpeed;
-        
+
         [SerializeField] protected Animator _weaponAnimator;
-        [FormerlySerializedAs("_modifyHealthComponent")] [SerializeField] protected SwordModifyHealthComponent _swordModifyHealthComponent;
-        
+        [SerializeField] protected SwordModifyHealthComponent _swordModifyHealthComponent;
+
         [SerializeField] protected LayerMask _layerToHit;
         public abstract void OnAttack(AttackTypes attackType);
         protected bool _isInCombat;

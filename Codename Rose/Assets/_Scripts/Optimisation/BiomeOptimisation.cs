@@ -1,4 +1,3 @@
-using _Scripts.UI.World;
 using UnityEngine;
 
 namespace _Scripts.Optimisation

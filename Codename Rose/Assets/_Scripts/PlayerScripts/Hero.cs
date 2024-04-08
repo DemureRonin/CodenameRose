@@ -1,50 +1,61 @@
 using System.Collections;
-using _Scripts.Creatures;
-using _Scripts.Creatures.CreatureDef;
+using _Scripts.Components;
+using _Scripts.Components.Health;
 using _Scripts.Weapons;
 using UnityEngine;
 
 namespace _Scripts.PlayerScripts
 {
-    public class Hero : Creature
+    public class Hero : MonoBehaviour
     {
-        [SerializeField] private HeroParameterDef _heroParameterDef;
-        [SerializeField] private LayerMask _collectableLayer;
         [SerializeField] private Weapon _equippedWeapon;
+        [SerializeField] private float _movementSpeed;
+        [SerializeField] private float _dashSpeed;
+        private SpriteRenderer _spriteRenderer;
 
-        private float DashSpeed => _heroParameterDef.DashSpeed;
-        private float CollectRadius => _heroParameterDef.CollectRadius;
+        private Vector2 _movementVector;
+        private Vector2 _lookDirection;
 
-        private Collider2D[] _interactionResult;
+        private Rigidbody2D _rigidBody;
+        private Animator _animator;
+
         private bool _isDashing;
 
-        protected override void Awake()
+        private static readonly int XDirection = Animator.StringToHash("xDirection");
+        private static readonly int YDirection = Animator.StringToHash("yDirection");
+
+        private void Awake()
         {
-            InitializeParameters(_heroParameterDef);
-            base.Awake();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _animator = GetComponent<Animator>();
+            _rigidBody = GetComponent<Rigidbody2D>();
+
+            _rigidBody.gravityScale = 0;
+            _rigidBody.freezeRotation = true;
         }
-        
-        protected override void FixedUpdate()
+
+        private void Update()
+        {
+            if (_rigidBody.velocity != Vector2.zero)
+                _lookDirection = _rigidBody.velocity;
+
+            SortOrderInLayer();
+        }
+
+        protected void FixedUpdate()
         {
             if (_isDashing) return;
-            base.FixedUpdate();
+            _rigidBody.velocity = new Vector2(_movementVector.x * _movementSpeed, _movementVector.y * _movementSpeed);
+            Animate();
         }
 
         public void SetVector(Vector2 vector)
         {
-            MovementVector = vector;
+            _movementVector = vector;
             if (vector != Vector2.zero)
             {
-                LookDirection = vector;
+                _lookDirection = vector;
             }
-        }
-
-        public void CheckCollectableObjects()
-        {
-            var size = Physics2D.OverlapCircle(transform.position, CollectRadius, _collectableLayer);
-            if (size == null) return;
-            var coll = size.gameObject.GetComponent<Collectable.Collectable>();
-            coll.Collect();
         }
 
         public void Attack(AttackTypes attackType) => _equippedWeapon.OnAttack(attackType);
@@ -52,10 +63,22 @@ namespace _Scripts.PlayerScripts
         public IEnumerator Dash()
         {
             _isDashing = true;
-            RigidBody.AddForce(LookDirection * DashSpeed, ForceMode2D.Impulse);
+            _rigidBody.AddForce(_lookDirection * _dashSpeed, ForceMode2D.Impulse);
             yield return new WaitForSeconds(0.1f);
-            RigidBody.velocity = Vector2.zero;
+            _rigidBody.velocity = Vector2.zero;
             _isDashing = false;
+        }
+
+
+        private void Animate()
+        {
+            _animator.SetFloat(XDirection, _lookDirection.x);
+            _animator.SetFloat(YDirection, _lookDirection.y);
+        }
+
+        private void SortOrderInLayer()
+        {
+            _spriteRenderer.sortingOrder = -(int)(transform.position.y * RenderSorting.SortingDiscretion) + 3;
         }
     }
 }

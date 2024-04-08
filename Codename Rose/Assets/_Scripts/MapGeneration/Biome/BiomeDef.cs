@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 namespace _Scripts.MapGeneration.Biome
@@ -15,16 +14,8 @@ namespace _Scripts.MapGeneration.Biome
 
         [Range(1, 500)] [SerializeField] private int _decorativeObjectsScarcity;
         [SerializeField] private GameObject[] _decorativeObjects;
-
-        [SerializeField] private GameObject[] _landMarks;
-        [SerializeField] private GameObject _checkPoint;
-
+        
         public int DecorativeObjectsScarcity => _decorativeObjectsScarcity;
-
-        public GameObject CheckPoint => _checkPoint;
-
-        public GameObject[] LandMarks => _landMarks;
-
 
         public string BiomeName => _biomeName;
 

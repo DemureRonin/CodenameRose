@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using _Scripts.PlayerScripts;
+﻿using _Scripts.PlayerScripts;
 using _Scripts.Utils;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
@@ -36,10 +35,10 @@ namespace _Scripts.EnemyScripts
             };
             _startTimer.StartTimer();
             _lifeTimer.StartTimer();
-            _direction = (_target.transform.position - transform.position).normalized * _bulletSpeed;
+           
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (_lifeTimer.IsReady)
             {
@@ -52,7 +51,12 @@ namespace _Scripts.EnemyScripts
 
         private void GoToTarget()
         {
-            _rigidbody.velocity = _direction;
+            _rigidbody.velocity = _direction * (_bulletSpeed * Time.deltaTime);
+        }
+
+        public void SetDirection(Vector3 targetPosition)
+        {
+            _direction = targetPosition;
         }
     }
 }

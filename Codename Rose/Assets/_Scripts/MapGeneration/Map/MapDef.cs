@@ -6,11 +6,11 @@ namespace _Scripts.MapGeneration.Map
     {
         public static int Seed => GenerateRandomSeed();
 
-        public static readonly int NumOfBiomes = 5;
+        public static readonly int NumOfBiomes = 3;
 
         public static readonly int SortingDiscretion = 5;
 
-        public static readonly int BiomeSize = 100;
+        public static readonly int BiomeSize = 64;
         public static readonly int ChunkSize = 5;
         public static readonly BiomeObject[,] Biomes = new BiomeObject[NumOfBiomes, NumOfBiomes];
 

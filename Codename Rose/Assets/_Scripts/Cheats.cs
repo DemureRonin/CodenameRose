@@ -1,4 +1,4 @@
-﻿using System;
+﻿using _Scripts.MapGeneration.Map;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,9 +8,19 @@ namespace _Scripts
     {
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.K))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                MapState.SetRain();
+            }
+
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                MapState.SetNight();
             }
         }
     }

@@ -17,5 +17,16 @@ namespace _Scripts.PlayerScripts
         {
             _camera.Follow = FindObjectOfType<Hero>().transform;
         }
+
+        private void OnEnable()
+        {
+            _camera = GetComponent<CinemachineVirtualCamera>();
+            _camera.Follow = FindObjectOfType<Hero>()?.transform;
+        }
+
+        private void OnDisable()
+        {
+            _camera.Follow = null;
+        }
     }
 }

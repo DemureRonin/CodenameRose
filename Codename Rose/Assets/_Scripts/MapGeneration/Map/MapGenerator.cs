@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using _Scripts.Components;
 using _Scripts.MapGeneration.Biome;
-using _Scripts.UI.World;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
@@ -16,8 +14,10 @@ namespace _Scripts.MapGeneration.Map
         [SerializeField] private RenderSorting _renderSorting;
         [SerializeField] private BiomeObject _biomeObject;
         [SerializeField] private Transform _spawnableObjectsParent;
-        [SerializeField] private GameObject _startVillage;
-        private List<BiomeObserver> _biomes;
+
+        [FormerlySerializedAs("_startVillage")] [SerializeField]
+        private GameObject _hero;
+
         private int Seed => MapDef.Seed;
         private int NumOfBiomes => MapDef.NumOfBiomes;
         private int BiomeSize => MapDef.BiomeSize;
@@ -60,14 +60,13 @@ namespace _Scripts.MapGeneration.Map
                     var biomeObject = biome.GetComponent<BiomeObject>();
 
                     MapDef.Biomes[indexX, indexY] = biomeObject;
-                    var center = (NumOfBiomes - 1) / 2 ;
+                    var center = (NumOfBiomes - 1) / 2;
                     if (indexY == center && indexX == center)
                     {
-                        biomeObject.GenerateCenter(_biomeDef[0], _map, x0, y0);
-                        var position =  new Vector2((x0 + x0+BiomeSize) / 2, (y0 + y0 + BiomeSize) / 2);
-                        Instantiate(_startVillage, position, Quaternion.identity);
-                        continue;
+                        var position = new Vector2((x0 + x0 + BiomeSize) / 2, (y0 + y0 + BiomeSize) / 2);
+                        Instantiate(_hero, position, Quaternion.identity);
                     }
+
                     var rand = Random.Next(0, _biomeDef.Length);
                     biomeObject.GenerateBiome(_biomeDef[rand], _map, x0, y0);
                 }

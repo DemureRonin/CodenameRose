@@ -56,12 +56,6 @@ namespace _Scripts.Weapons
             _followTargetPosition = _player.transform;
             _stateSwitchTimer.Value = _idleTimeToSwitchState;
         }
-
-        private void FixedUpdate()
-        {
-            
-        }
-
         private void Update()
         {
             _spriteRenderer.sortingOrder = -(int)(transform.position.y * MapDef.SortingDiscretion) - 1;

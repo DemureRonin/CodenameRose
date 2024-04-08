@@ -8,6 +8,8 @@ namespace _Scripts.PlayerScripts
     public class HeroInputHandler : MonoBehaviour
     {
         private Hero _hero;
+        public delegate void InputEvent();
+        public static event InputEvent OnNoteBookToggle;
 
         private void Awake()
         {
@@ -19,15 +21,7 @@ namespace _Scripts.PlayerScripts
             var vector = context.ReadValue<Vector2>();
             _hero.SetVector(vector);
         }
-
-        public void OnQButtonPressed(InputAction.CallbackContext context)
-        {
-            if (context.performed)
-            {
-                _hero.CheckCollectableObjects();
-            }
-        }
-
+        
         public void OnLeftMousePressed(InputAction.CallbackContext context)
         {
             if (context.performed)
@@ -49,6 +43,13 @@ namespace _Scripts.PlayerScripts
             if (context.performed)
             {
                 StartCoroutine(_hero.Dash());
+            }
+        }
+        public void OnTabPressed(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                OnNoteBookToggle?.Invoke();
             }
         }
     }

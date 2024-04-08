@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248174633ee74285bf70a7e77f384941, type: 3}
   m_Name: HeroDef
   m_EditorClassIdentifier: 
-  _level: 0
-  _movementSpeed: 2.3
+  _movementSpeed: 4
   _maxHealth: 100
   _dashSpeed: 10
   _collectRadius: 1

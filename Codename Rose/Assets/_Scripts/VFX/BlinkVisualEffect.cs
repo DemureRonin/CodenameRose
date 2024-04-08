@@ -7,6 +7,7 @@ namespace _Scripts.VFX
     {
         private const int AlphaIncrement = 10;
         private const int MinAlpha = 0;
+        private bool _isBlinking;
 
          private SpriteRenderer _spriteRenderer;
 
@@ -17,6 +18,8 @@ namespace _Scripts.VFX
 
         public void Blink()
         {
+            if (_isBlinking) return;
+            _isBlinking = true;
             StartCoroutine(BlinkCoroutine());
         }
 
@@ -34,6 +37,8 @@ namespace _Scripts.VFX
                 _spriteRenderer.color = Color.Lerp(minAlpha, initialColor, tick);
                 yield return null;
             }
+
+            _isBlinking = false;
         }
     }
 }

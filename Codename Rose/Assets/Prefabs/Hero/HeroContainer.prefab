@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1191448796434505063}
   - component: {fileID: 2845839975621764564}
   m_Layer: 9
-  m_Name: Rose 1
+  m_Name: Rose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -105,11 +105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7d06ef865d1e604ba5219ec88a46261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _heroParameterDef: {fileID: 11400000, guid: 8dbe79d130c0b324b9151bc3c4742b5b, type: 2}
-  _collectableLayer:
-    serializedVersion: 2
-    m_Bits: 0
   _equippedWeapon: {fileID: 1059653432868070703}
+  _movementSpeed: 4
+  _dashSpeed: 4
 --- !u!114 &7468267786765989224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,19 +218,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7468267786765989224}
-        m_TargetAssemblyTypeName: _Scripts.HeroInputHandler, Assembly-CSharp
-        m_MethodName: OnQButtonPressed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 2700317d-4558-49fc-b933-99bb8cc61ed8
     m_ActionName: Keyboard/New action
   - m_PersistentCalls:
@@ -299,6 +285,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: e41e88c5-ccfa-4b77-8ee7-e61d9a199397
     m_ActionName: Keyboard/HeavyAttack[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7468267786765989224}
+        m_TargetAssemblyTypeName: _Scripts.PlayerScripts.HeroInputHandler, Assembly-CSharp
+        m_MethodName: OnTabPressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b21de409-43d3-4a61-a2f1-0fe791d080ef
+    m_ActionName: Keyboard/NoteBook[/Keyboard/tab]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Keyboard
@@ -431,7 +433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2673320b840c456fba7437ce741dff0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _immortal: 0
+  _maxHp: 100
   _health: 100
   _onDamage:
     m_PersistentCalls:
@@ -781,7 +783,7 @@ GameObject:
   - component: {fileID: 1800182685821842300}
   - component: {fileID: 3720770019360491002}
   m_Layer: 0
-  m_Name: Sword
+  m_Name: SwordContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -889,7 +891,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 5b589ae6a9d5fc6419a8261a5af109e9, type: 3}
     - target: {fileID: 4783161403718349670, guid: 9d69e7c3444bdc4459a317f6548db481, type: 3}
       propertyPath: m_Name
-      value: sword1
+      value: Sword
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

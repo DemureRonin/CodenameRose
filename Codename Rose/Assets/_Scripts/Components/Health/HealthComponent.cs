@@ -8,15 +8,14 @@ namespace _Scripts.Components.Health
     [RequireComponent(typeof(BlinkVisualEffect), typeof(DamagePopUp))]
     public class HealthComponent : MonoBehaviour
     {
-        [SerializeField] private bool _immortal;
+        [SerializeField] private float _maxHp;
         [SerializeField] private float _health;
-
 
         [SerializeField] private UnityEvent _onDamage;
         [SerializeField] private UnityEvent _onDie;
-        
+        private bool _dead;
+
         private float _incomingDamage;
-        private float _maxHp;
 
         private DamagePopUp _damagePopUp;
         private BlinkVisualEffect _blinkVisualEffect;
@@ -34,28 +33,18 @@ namespace _Scripts.Components.Health
             _blinkVisualEffect = GetComponent<BlinkVisualEffect>();
         }
 
-        private void Start()
-        {
-           
-        }
-
         public void TakeDamage(float damage, GameObject attacker)
         {
+            if (_dead) return;
             _incomingDamage = damage;
-            if (_immortal)
-            {
-                _onDamage?.Invoke();
-                OnDamage();
-                return;
-            }
-
-            if (_health <= 0) return;
             if (damage < 0) throw new ArgumentException("Damage is less than zero");
             _attacker = attacker;
             _health -= damage;
 
             if (_health <= 0)
             {
+                _dead = true;
+                _onDamage?.Invoke();
                 _onDie?.Invoke();
                 return;
             }
@@ -68,13 +57,6 @@ namespace _Scripts.Components.Health
         {
             _damagePopUp.SpawnDamagePopUp(_incomingDamage);
             _blinkVisualEffect.Blink();
-        }
-
-        public void SetHealth(float health)
-        {
-            if (health <= 0) throw new ArgumentException("Health passed is less or equal 0 at " + gameObject.name);
-            _health = health;
-            _maxHp = _health;
         }
     }
 }
