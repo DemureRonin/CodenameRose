@@ -10,6 +10,7 @@ namespace _Scripts.PlayerScripts
         private Hero _hero;
         public delegate void InputEvent();
         public static event InputEvent OnNoteBookToggle;
+        public static event InputEvent OnConsoleToggle;
 
         private void Awake()
         {
@@ -50,6 +51,13 @@ namespace _Scripts.PlayerScripts
             if (context.performed)
             {
                 OnNoteBookToggle?.Invoke();
+            }
+        }
+        public void OnEPressed(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                OnConsoleToggle?.Invoke();
             }
         }
     }

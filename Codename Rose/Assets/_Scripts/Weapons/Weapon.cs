@@ -1,6 +1,5 @@
 ﻿using _Scripts.Components.Health;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Scripts.Weapons
 {

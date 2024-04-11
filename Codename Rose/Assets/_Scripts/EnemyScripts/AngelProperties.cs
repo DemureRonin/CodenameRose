@@ -1,7 +1,6 @@
-﻿using System;
+﻿using System.Collections;
 using _Scripts.MapGeneration.Map;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Scripts.EnemyScripts
 {
@@ -30,7 +29,16 @@ namespace _Scripts.EnemyScripts
 
         public void TransmitToCore()
         {
-            MapState.SetCoreValue(_coreTransmissionValue);
+            StartCoroutine(TransmitValue());
+
+            IEnumerator TransmitValue()
+            {
+                for (int i = 0; i < _coreTransmissionValue; i++)
+                {
+                    MapState.SetCoreValue(1);
+                    yield return new WaitForSeconds(0.05f);
+                }
+            }
         }
 
         private void OnEnable()

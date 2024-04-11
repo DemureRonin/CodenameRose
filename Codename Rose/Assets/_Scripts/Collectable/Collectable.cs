@@ -1,21 +1,20 @@
-﻿using UnityEngine;
-using UnityEngine.Events;
+﻿using _Scripts.UI;
+using UnityEngine;
 
 namespace _Scripts.Collectable
 {
-    public class Collectable : MonoBehaviour, ICollectable
+    public class Collectable : MonoBehaviour
     {
-        [SerializeField] private UnityEvent _onCollect;
-
-        public delegate void CollectEvent(Collectable collectable);
+        [SerializeField] private ItemTypes _id;
+        [SerializeField] private Inventory _inventory;
+        public delegate void CollectEvent(ItemTypes id);
 
         public static event CollectEvent OnCollect;
 
-
         public void Collect()
         {
-            OnCollect?.Invoke(this);
-            _onCollect?.Invoke();
+            _inventory.AddItem(_id);
+            OnCollect?.Invoke(_id);
         }
     }
 }

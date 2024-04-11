@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22717257cd5d44fb9634eeb6fb748985, type: 3}
+  m_Name: OptionButtonDefConsole
+  m_EditorClassIdentifier: 
+  _buttons:
+  - _type: 1
+    _buttonGameObject: {fileID: 367067450991117311, guid: 991437430db4e434a8ad2968a816c81d, type: 3}
+    _sprite: {fileID: 7851025, guid: 0c70ea70b7a3435469e5acd06e719f40, type: 3}
+  - _type: 2
+    _buttonGameObject: {fileID: 4709783705213429997, guid: af13a7c529c8f0f419159836adadd7dd, type: 3}
+    _sprite: {fileID: 244735561, guid: 0c70ea70b7a3435469e5acd06e719f40, type: 3}
+  - _type: 4
+    _buttonGameObject: {fileID: 8049577443468819348, guid: 220b4ebaf779d3c4f836c9b840d5cfd4, type: 3}
+    _sprite: {fileID: -1656521631, guid: 0c70ea70b7a3435469e5acd06e719f40, type: 3}
+  - _type: 3
+    _buttonGameObject: {fileID: 243916913904058242, guid: db24b440a50aedf458b5ee13fa80fbf1, type: 3}
+    _sprite: {fileID: 21300000, guid: b8c8fe8afdfc8274f8f41588303232e9, type: 3}

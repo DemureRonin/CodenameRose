@@ -1,8 +1,9 @@
 ﻿using System;
+using UnityEngine;
 
 namespace _Scripts.MapGeneration.Map
 {
-    public static class MapState
+    public  class MapState : MonoBehaviour
     {
         private static int _coreValue = 0;
 
@@ -22,6 +23,12 @@ namespace _Scripts.MapGeneration.Map
         public static event MapEvent OnTimeChanged;
         public static event MapEvent OnWeatherChanged;
 
+        private void Awake()
+        {
+            _coreValue = 0;
+            _day = true;
+            _rain = false;
+        }
 
         public static void SetNight()
         {

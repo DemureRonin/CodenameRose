@@ -301,6 +301,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b21de409-43d3-4a61-a2f1-0fe791d080ef
     m_ActionName: Keyboard/NoteBook[/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7468267786765989224}
+        m_TargetAssemblyTypeName: _Scripts.PlayerScripts.HeroInputHandler, Assembly-CSharp
+        m_MethodName: OnEPressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 196e9d94-6096-4dc6-b727-343bdeabdb3b
+    m_ActionName: Keyboard/Interact[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Keyboard
@@ -948,7 +964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c6e5211bcca462f97ebc5b9d37ed2a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseDamageLight: 5
+  _baseDamageLight: 1000
   _baseDamageHeavy: 12
 --- !u!95 &689688409614056584 stripped
 Animator:

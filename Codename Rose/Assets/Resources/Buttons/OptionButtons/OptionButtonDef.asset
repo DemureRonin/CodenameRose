@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22717257cd5d44fb9634eeb6fb748985, type: 3}
+  m_Name: OptionButtonDef
+  m_EditorClassIdentifier: 
+  _buttons:
+  - _type: 0
+    _buttonGameObject: {fileID: 1223152698226699176, guid: f0e8db53a0b2bfe42a581dd15416cb12, type: 3}
+  - _type: 1
+    _buttonGameObject: {fileID: 367067450991117311, guid: 07c8a33f858379749bd73bd56e6287ea, type: 3}
+  - _type: 2
+    _buttonGameObject: {fileID: 4709783705213429997, guid: b261f14b491636349b10ecdb3f15861d, type: 3}
+  - _type: 4
+    _buttonGameObject: {fileID: 8049577443468819348, guid: 20e42f4acba4603479d14013b49126ed, type: 3}
+  - _type: 3
+    _buttonGameObject: {fileID: 243916913904058242, guid: 94b808403398fee4e8ed669ec488adbe, type: 3}

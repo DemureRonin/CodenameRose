@@ -38,7 +38,7 @@ namespace _Scripts.EnemyScripts
            
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (_lifeTimer.IsReady)
             {
@@ -51,7 +51,7 @@ namespace _Scripts.EnemyScripts
 
         private void GoToTarget()
         {
-            _rigidbody.velocity = _direction * (_bulletSpeed * Time.deltaTime);
+            _rigidbody.velocity = _direction * (_bulletSpeed );
         }
 
         public void SetDirection(Vector3 targetPosition)
