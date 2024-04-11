@@ -10,7 +10,7 @@ namespace _Scripts.UI.Widgets
         }
         protected override void OnDisable()
         {
-            HeroInputHandler.OnConsoleToggle += ToggleWindow;
+            HeroInputHandler.OnConsoleToggle -= ToggleWindow;
         }
     }
 }
