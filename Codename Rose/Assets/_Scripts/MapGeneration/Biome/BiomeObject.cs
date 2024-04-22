@@ -49,6 +49,10 @@ namespace _Scripts.MapGeneration.Biome
             _biomeObserver.transform.parent = transform;
 
             GenerateGrass(x0, y0, x1, y1);
+            GenerateGrass(x0, y0, x1, y1);
+            GenerateGrass(x0, y0, x1, y1);
+            GenerateGrass(x0, y0, x1, y1);
+            GenerateGrass(x0, y0, x1, y1);
             GenerateDecorativeObjects(x0, y0, x1, y1);
         }
 

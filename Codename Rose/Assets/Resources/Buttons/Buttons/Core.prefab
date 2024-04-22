@@ -31,7 +31,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.4782871, y: 0.4782871, z: 0.4782871}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8088349999579203820}
   m_Father: {fileID: 0}
@@ -94,6 +94,7 @@ MonoBehaviour:
   _frame: {fileID: 3306494541101311504}
   _content: {fileID: 0}
   _type: 0
+  _isItemButton: 1
 --- !u!114 &6391412647800429249
 MonoBehaviour:
   m_ObjectHideFlags: 0

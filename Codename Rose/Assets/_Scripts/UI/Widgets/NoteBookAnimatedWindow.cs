@@ -5,7 +5,7 @@ namespace _Scripts.UI.Widgets
 {
     public class NoteBookAnimatedWindow : MonoBehaviour
     {
-        [SerializeField] private Animator _animator;
+        [SerializeField] protected Animator _animator;
         private bool _active;
 
         protected void ToggleWindow()

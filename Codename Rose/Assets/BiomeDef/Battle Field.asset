@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _biomeName: Battle Field
   _groundTile: {fileID: 11400000, guid: a6cb5242c9a5cae45908fc03e2ba01f0, type: 2}
-  "_grassScar\u0441ity": 1
+  "_grassScar\u0441ity": 2
   _grass:
   - {fileID: 687306351674500911, guid: 34e83c1e743a7a945a4077b964b39592, type: 3}
   - {fileID: 5067495436448892530, guid: 30553118b99158c4c9dbfe8525777cfc, type: 3}
@@ -52,7 +52,7 @@ MonoBehaviour:
   - {fileID: 5573833213905117013, guid: d969b3127fe3d764ca9d0826b60a91c3, type: 3}
   - {fileID: 946685859822730884, guid: baad1c98c50c3f94b8869f86de6a2612, type: 3}
   - {fileID: 7070547969636454180, guid: c3502040a17535a4eb8798e9ba9aa885, type: 3}
-  _decorativeObjectsScarcity: 450
+  _decorativeObjectsScarcity: 100
   _decorativeObjects:
   - {fileID: 2840120605434069533, guid: c4c76e2fd8febb64ebb4b2dde46b69d9, type: 3}
   - {fileID: 4901038041837899326, guid: 6ab52b9011929004983a8baa4c6a0eb1, type: 3}

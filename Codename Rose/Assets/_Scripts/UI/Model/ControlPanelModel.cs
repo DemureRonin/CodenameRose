@@ -1,4 +1,5 @@
-﻿using _Scripts.MapGeneration.Map;
+﻿using _Scripts.EnemyScripts;
+using _Scripts.MapGeneration.Map;
 using UnityEngine;
 
 namespace _Scripts.UI.Model
@@ -23,9 +24,33 @@ namespace _Scripts.UI.Model
             }
         }
 
-        public void SetReductor(ItemTypes? type)
+        public void SetReductor(ItemTypes? type, int lane)
         {
-            Debug.Log("Reductor Set");
+            var angels = FindObjectsByType<AngelProperties>(FindObjectsSortMode.None);
+            switch (type)
+            {
+                case ItemTypes.CoreReductor:
+                {
+                    foreach (var angel in angels)
+                    {
+                        if (angel.Lane == lane)
+                            angel.CanTransmitToCore = false;
+                    }
+                    break;
+                }
+                case ItemTypes.ElectricityReductor:
+                {
+                    foreach (var angel in angels)
+                    {
+                        if (angel.Lane != lane) continue;
+                        angel.CanTransmitToCore = false;
+                        angel.SelfDestruct();
+
+                    }
+                    break;
+                }
+            }
+           
         }
     }
 }

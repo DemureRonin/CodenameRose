@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using _Scripts.Components.Health;
+using _Scripts.MapGeneration.Map;
 using _Scripts.PlayerScripts;
+using _Scripts.UI.Widgets.AngelInfo;
 using Unity.Mathematics;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
@@ -12,6 +14,7 @@ namespace _Scripts.EnemyScripts
     public class AngelAI : MonoBehaviour
     {
         [SerializeField] private string _name;
+        [SerializeField] private AngelNames _type;
         [SerializeField] private GameObject _projectile;
         [SerializeField] private GameObject _eyeParticle;
         [SerializeField] private float _attackCooldown;
@@ -32,9 +35,13 @@ namespace _Scripts.EnemyScripts
 
         public delegate void EnemyEvent();
         public static event EnemyEvent OnDeath;
+        public delegate void EncounterEvent(AngelNames name);
+        public static event EncounterEvent OnEncounter;
+        public static event EncounterEvent OnAngelDeath;
 
         public delegate void EnemyDamageEvent(float currentHp, float maxHp);
         public static event EnemyDamageEvent OnDamage;
+        
 
         private void Awake()
         {
@@ -54,6 +61,7 @@ namespace _Scripts.EnemyScripts
 
         public void OnDie()
         {
+            OnAngelDeath?.Invoke(_type);
             OnDeath?.Invoke();
         }
 
@@ -70,6 +78,7 @@ namespace _Scripts.EnemyScripts
         {
             if (_isHeroInVision) return;
             _isHeroInVision = true;
+            OnEncounter?.Invoke(_type);
             OnFightStart?.Invoke(_name);
             
             _healthComponent.gameObject.SetActive(true);
@@ -91,7 +100,7 @@ namespace _Scripts.EnemyScripts
             var targetPosition = transform.position;
             while ((Vector2)_camera.transform.position != (Vector2)targetPosition)
             {
-                var pos = _camera.transform.position = Vector2.Lerp((Vector2)_camera.transform.position, (Vector2)targetPosition, 0.01f );
+                var pos = _camera.transform.position = Vector2.Lerp((Vector2)_camera.transform.position, (Vector2)targetPosition, 0.007f );
 
                 _camera.transform.position = new Vector3(pos.x, pos.y, -10);
                 yield return null;
@@ -165,7 +174,7 @@ namespace _Scripts.EnemyScripts
 
         private void RoundProjectileAttack()
         {
-            var points = GenerateCirclePoints(12, 0.5f);
+            var points = GenerateCirclePoints(12, 0.1f);
             foreach (var point in points)
             {
                 var position = transform.position;
@@ -191,7 +200,8 @@ namespace _Scripts.EnemyScripts
             };
             foreach (var position in spherePositions)
             {
-                var projectile = Instantiate(_projectile, (Vector2)transform.position + position, quaternion.identity);
+               var pos = position *0.5f;
+                var projectile = Instantiate(_projectile, (Vector2)transform.position + pos, quaternion.identity);
                 if (position == Vector2.zero)
                 {
                     projectile.GetComponent<Projectile>()

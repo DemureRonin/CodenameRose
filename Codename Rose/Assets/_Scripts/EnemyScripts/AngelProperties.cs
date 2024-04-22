@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using _Scripts.MapGeneration.Map;
+using _Scripts.UI.Widgets.AngelInfo;
 using UnityEngine;
 
 namespace _Scripts.EnemyScripts
@@ -9,11 +10,20 @@ namespace _Scripts.EnemyScripts
         [SerializeField] private bool _daySpawn;
         [SerializeField] private bool _rainSpawn;
         [SerializeField] private int _coreTransmissionValue;
+        [SerializeField] private int _lane;
         [SerializeField] private GameObject _angelObject;
+       
+        public bool CanTransmitToCore = true;
+        public int Lane => _lane;
 
         private void Start()
         {
             OnMapStateChanged();
+        }
+
+        public void OnEncounter()
+        {
+            
         }
 
         private void OnMapStateChanged()
@@ -24,11 +34,13 @@ namespace _Scripts.EnemyScripts
                 return;
             }
 
-            _angelObject.SetActive(false);
+            if (_angelObject != null)
+                _angelObject.SetActive(false);
         }
 
         public void TransmitToCore()
         {
+            if (!CanTransmitToCore) return;
             StartCoroutine(TransmitValue());
 
             IEnumerator TransmitValue()
@@ -51,6 +63,12 @@ namespace _Scripts.EnemyScripts
         {
             MapState.OnTimeChanged -= OnMapStateChanged;
             MapState.OnWeatherChanged -= OnMapStateChanged;
+        }
+
+        public void SelfDestruct()
+        {
+            var ai = _angelObject.GetComponent<AngelAI>();
+            ai.OnDie();
         }
     }
 }

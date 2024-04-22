@@ -9,10 +9,10 @@ namespace _Scripts.MapGeneration.Biome
         [SerializeField] private string _biomeName;
         [SerializeField] private TileBase _groundTile;
 
-        [Range(1, 10)] [SerializeField] private int _grassScarсity;
+         [SerializeField] private int _grassScarсity;
         [SerializeField] private GameObject[] _grass;
 
-        [Range(1, 500)] [SerializeField] private int _decorativeObjectsScarcity;
+        [Range(0, 500)] [SerializeField] private int _decorativeObjectsScarcity;
         [SerializeField] private GameObject[] _decorativeObjects;
         
         public int DecorativeObjectsScarcity => _decorativeObjectsScarcity;

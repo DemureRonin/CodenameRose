@@ -1,6 +1,7 @@
 using System.Collections;
 using _Scripts.Components;
 using _Scripts.Components.Health;
+using _Scripts.Utils;
 using _Scripts.Weapons;
 using UnityEngine;
 
@@ -11,7 +12,9 @@ namespace _Scripts.PlayerScripts
         [SerializeField] private Weapon _equippedWeapon;
         [SerializeField] private float _movementSpeed;
         [SerializeField] private float _dashSpeed;
+        [SerializeField] private float _dashCooldown;
         private SpriteRenderer _spriteRenderer;
+        
 
         private Vector2 _movementVector;
         private Vector2 _lookDirection;
@@ -20,6 +23,8 @@ namespace _Scripts.PlayerScripts
         private Animator _animator;
 
         private bool _isDashing;
+        private bool _canDash;
+        private Timer _dashTimer = new ();
 
         private static readonly int XDirection = Animator.StringToHash("xDirection");
         private static readonly int YDirection = Animator.StringToHash("yDirection");
@@ -32,6 +37,9 @@ namespace _Scripts.PlayerScripts
 
             _rigidBody.gravityScale = 0;
             _rigidBody.freezeRotation = true;
+
+            _dashTimer.Value = _dashCooldown;
+            _dashTimer.StartTimer();
         }
 
         private void Update()
@@ -62,6 +70,8 @@ namespace _Scripts.PlayerScripts
 
         public IEnumerator Dash()
         {
+            if (!_dashTimer.IsReady) yield break;
+            _dashTimer.StartTimer();
             _isDashing = true;
             _rigidBody.AddForce(_lookDirection * _dashSpeed, ForceMode2D.Impulse);
             yield return new WaitForSeconds(0.1f);

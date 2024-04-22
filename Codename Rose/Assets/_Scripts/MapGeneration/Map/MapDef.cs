@@ -10,7 +10,7 @@ namespace _Scripts.MapGeneration.Map
 
         public static readonly int SortingDiscretion = 5;
 
-        public static readonly int BiomeSize = 64;
+        public static readonly int BiomeSize = 32;
         public static readonly int ChunkSize = 5;
         public static readonly BiomeObject[,] Biomes = new BiomeObject[NumOfBiomes, NumOfBiomes];
 

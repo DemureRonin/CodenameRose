@@ -35,6 +35,7 @@ namespace _Scripts.UI.Widgets
         private IEnumerator ClearText()
         {
             List<char> name = new List<char>();
+            if (_name == null) yield break;
             foreach (var letter in _name)
             {
                 name.Add(letter);

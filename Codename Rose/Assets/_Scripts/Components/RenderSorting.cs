@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _Scripts.Components
 {
     public class RenderSorting : MonoBehaviour
     {
-        private List<SpriteRenderer> _spriteRenderer;
         public static readonly int SortingDiscretion = 6;
 
         public void SetSortingLayer()

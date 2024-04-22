@@ -93,6 +93,7 @@ MonoBehaviour:
   _frame: {fileID: 6042993780410325344}
   _content: {fileID: 0}
   _type: 0
+  _isItemButton: 1
 --- !u!114 &5212487342237001283
 MonoBehaviour:
   m_ObjectHideFlags: 0

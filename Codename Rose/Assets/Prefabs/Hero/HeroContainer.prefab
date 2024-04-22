@@ -106,8 +106,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _equippedWeapon: {fileID: 1059653432868070703}
-  _movementSpeed: 4
-  _dashSpeed: 4
+  _movementSpeed: 2
+  _dashSpeed: 3
+  _dashCooldown: 0
 --- !u!114 &7468267786765989224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,18 +180,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.005823374, y: -0.5670171}
+  m_Offset: {x: -0.005823374, y: -0.29264337}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.5625, y: 1.375}
+    oldSize: {x: 0.28125, y: 0.6875}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.38676882, y: 0.22510433}
+  m_Size: {x: 0.38676882, y: 0.13611838}
   m_EdgeRadius: 0
 --- !u!114 &1437317814593631262
 MonoBehaviour:
@@ -370,6 +371,7 @@ GameObject:
   - component: {fileID: 4183867662348489889}
   - component: {fileID: 3591325337234492097}
   - component: {fileID: 7834502739595299857}
+  - component: {fileID: 3999320574160420439}
   m_Layer: 10
   m_Name: HitBox
   m_TagString: Player
@@ -424,7 +426,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.05126953, y: 0.1007185}
+  m_Offset: {x: 0.0049226284, y: 0.0024630427}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -435,7 +437,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.44029617, y: 1.0174809}
+  m_Size: {x: 0.28827834, y: 0.6874908}
   m_EdgeRadius: 0
 --- !u!114 &1748975021583115128
 MonoBehaviour:
@@ -449,8 +451,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2673320b840c456fba7437ce741dff0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 100
-  _health: 100
+  _maxHp: 1
+  _health: 1
   _onDamage:
     m_PersistentCalls:
       m_Calls:
@@ -469,9 +471,21 @@ MonoBehaviour:
   _onDie:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2025641930779338368}
-        m_TargetAssemblyTypeName: _Scripts.Components.DestroyComponent, Assembly-CSharp
-        m_MethodName: Destroy
+      - m_Target: {fileID: 7468267786765989224}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3999320574160420439}
+        m_TargetAssemblyTypeName: _Scripts.PlayerScripts.HeroDeathObserver, Assembly-CSharp
+        m_MethodName: OnDeath
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -531,6 +545,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c6ed8826c33f44478ae7aed6717b55a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3999320574160420439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573787943813570739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0980e0fa0a4561a8031be366fd8296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1670071831732909981
@@ -672,7 +698,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0.032238007, y: 0}
   serializedVersion: 2
-  m_Radius: 28.936169
+  m_Radius: 14
 --- !u!1 &3853774686097186642
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,9 +966,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 395174824bb1add4d9f67a2f8589ce42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _followSpeed: 5
+  _followSpeed: 3
   _idleTimeToSwitchState: 1
-  _attackSpeed: 75
+  _attackSpeed: 37.5
   _weaponAnimator: {fileID: 689688409614056584}
   _swordModifyHealthComponent: {fileID: 2409201815818709256}
   _layerToHit:
@@ -952,6 +978,7 @@ MonoBehaviour:
   _heavyAttackDelayTime: 0.2
   _lightAttackClip: {fileID: 7400000, guid: 1074eee7f2c3def40a0f80526a77d039, type: 2}
   _heavyAttackClip: {fileID: 7400000, guid: a06a64ec5465d0747a5ac838f83ebe09, type: 2}
+  _groundScar: {fileID: 7865693752002432818, guid: c7b464a5c3991764bae689f2420e9ed5, type: 3}
 --- !u!114 &2409201815818709256
 MonoBehaviour:
   m_ObjectHideFlags: 0

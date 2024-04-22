@@ -1,4 +1,5 @@
-﻿using _Scripts.MapGeneration.Map;
+﻿using System;
+using _Scripts.MapGeneration.Map;
 using TMPro;
 using UnityEngine;
 
@@ -27,5 +28,10 @@ namespace _Scripts.UI.Widgets
         {
             MapState.OnCoreValueChanged -= SetCoreValue;
         }
+    }
+    [Serializable]
+    public class Lane
+    {
+        [SerializeField] private int _index;
     }
 }

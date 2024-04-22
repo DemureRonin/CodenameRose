@@ -11,6 +11,7 @@ namespace _Scripts.UI.Widgets
         [SerializeField] private bool _reductor;
         [SerializeField] private OptionButtonDef _optionButtonDef;
         [SerializeField] private ControlPanelModel _controlPanelModel;
+        [SerializeField] private int _lane;
         private bool _active;
         private Image _image;
         private ItemTypes? _currentItemSelection;
@@ -51,7 +52,7 @@ namespace _Scripts.UI.Widgets
 
                 OnPlace?.Invoke(_placedObject);
                 
-                if (_reductor) _controlPanelModel.SetReductor(_placedObject);
+                if (_reductor) _controlPanelModel.SetReductor(_placedObject, _lane);
                 else _controlPanelModel.SetModule(_placedObject);
                 
                 return;
@@ -61,6 +62,7 @@ namespace _Scripts.UI.Widgets
 
         private void Activate(ItemTypes id)
         {
+            if (_occupied) return;
             if (_reductor == CheckType(id))
             {
                 _blockerImage.SetActive(false);
@@ -73,19 +75,25 @@ namespace _Scripts.UI.Widgets
             _active = false;
         }
 
-        private bool CheckType(ItemTypes id)
+        private bool CheckType(ItemTypes id) => id is ItemTypes.CoreReductor or ItemTypes.ElectricityReductor;
+
+        private void ClearSelection(ItemTypes? id)
         {
-            return id is ItemTypes.CoreReductor or ItemTypes.ElectricityReductor;
+            _currentItemSelection = null;
         }
 
         private void OnEnable()
         {
             PanelButtonWidget.OnPress += Activate;
+            OnPlace += ClearSelection;
         }
 
         private void OnDisable()
         {
             PanelButtonWidget.OnPress -= Activate;
+            OnPlace -= ClearSelection;
         }
+
+        
     }
 }

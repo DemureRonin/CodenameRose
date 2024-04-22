@@ -92,6 +92,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _frame: {fileID: 3306494541101311504}
   _content: {fileID: 0}
+  _type: 0
+  _isItemButton: 1
 --- !u!114 &6391412647800429249
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,16 +12,6 @@ namespace _Scripts
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
-
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                MapState.SetRain();
-            }
-
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                MapState.SetNight();
-            }
         }
     }
 }

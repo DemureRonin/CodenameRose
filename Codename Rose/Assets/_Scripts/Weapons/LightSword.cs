@@ -14,6 +14,7 @@ namespace _Scripts.Weapons
         [SerializeField] private float _heavyAttackDelayTime = 0.5f;
         [SerializeField] private AnimationClip _lightAttackClip;
         [SerializeField] private AnimationClip _heavyAttackClip;
+        [SerializeField] private GameObject _groundScar;
 
         private readonly List<Attack> _combo = new();
         private readonly int _maxCombo = 4;
@@ -135,6 +136,8 @@ namespace _Scripts.Weapons
             yield return coroutine;
 
             LightAttackHitCheck();
+            var transform1 = transform;
+            Instantiate(_groundScar, transform1.position, transform1.rotation);
             _stateSwitchTimer.StartTimer();
             _isAttacking = false;
         }

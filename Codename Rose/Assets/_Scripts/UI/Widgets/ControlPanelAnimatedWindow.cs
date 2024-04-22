@@ -1,16 +1,20 @@
-﻿using _Scripts.PlayerScripts;
+﻿using _Scripts.Components;
 
 namespace _Scripts.UI.Widgets
 {
     public class ControlPanelAnimatedWindow : NoteBookAnimatedWindow
     {
+        private void Hide()
+        {
+            _animator.Play("hide");
+        }
         protected override void OnEnable()
         {
-            HeroInputHandler.OnConsoleToggle += ToggleWindow;
+            CoreInteractionComponent.OnConsoleToggle += ToggleWindow;
         }
         protected override void OnDisable()
         {
-            HeroInputHandler.OnConsoleToggle -= ToggleWindow;
+            CoreInteractionComponent.OnConsoleToggle -= ToggleWindow;
         }
     }
 }

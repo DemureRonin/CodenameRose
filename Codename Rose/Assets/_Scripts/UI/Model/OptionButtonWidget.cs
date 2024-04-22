@@ -7,6 +7,11 @@ namespace _Scripts.UI.Model
         [SerializeField] private GameObject _frame;
         [SerializeField] private GameObject _content;
         [SerializeField] private ItemTypes _type;
+        [SerializeField] private bool _isItemButton = true;
+
+        public delegate void SelectEvent(ItemTypes id);
+
+        public static event SelectEvent OnSelect;
 
         public ItemTypes Type => _type;
 
@@ -32,6 +37,7 @@ namespace _Scripts.UI.Model
             _frame.SetActive(true);
             if (_content != null)
                 _content.SetActive(true);
+            if (_isItemButton) OnSelect?.Invoke(_type);
         }
 
         public void Deactivate()

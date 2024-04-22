@@ -1,6 +1,7 @@
 using _Scripts.Components;
 using _Scripts.MapGeneration.Biome;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
@@ -32,6 +33,12 @@ namespace _Scripts.MapGeneration.Map
             GenerateMap();
             _renderSorting.SetSortingLayer();
             UnloadMap();
+         
+        }
+
+        private void LoadUI()
+        {
+            SceneManager.LoadScene("UI", LoadSceneMode.Additive);
         }
 
         private void UnloadMap()
