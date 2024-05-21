@@ -108,7 +108,7 @@ MonoBehaviour:
   _equippedWeapon: {fileID: 1059653432868070703}
   _movementSpeed: 2
   _dashSpeed: 3
-  _dashCooldown: 0
+  _dashCooldown: 1
 --- !u!114 &7468267786765989224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,8 +451,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2673320b840c456fba7437ce741dff0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 1
-  _health: 1
+  _maxHp: 15
+  _health: 15
   _onDamage:
     m_PersistentCalls:
       m_Calls:
@@ -991,7 +991,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c6e5211bcca462f97ebc5b9d37ed2a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseDamageLight: 1000
+  _baseDamageLight: 100
   _baseDamageHeavy: 12
 --- !u!95 &689688409614056584 stripped
 Animator:
