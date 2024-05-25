@@ -12,8 +12,8 @@ namespace _Scripts.Components.Health
         private const float MediumDistanceMod = 1f;
 
         private const float LongDistance = 7;
-        private const float LongDistanceMod = 0.8f;
-        private const float LargeDistanceMod = 0.3f;
+        private const float LongDistanceMod = 0.7f;
+        private const float LargeDistanceMod = 0.2f;
 
         public static float CalculateDamage(Vector2 recipientPosition, Vector2 attackerPosition,
             Vector2 previousSwordPosition, Vector2 swordPosition, double baseDamage)

@@ -991,8 +991,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c6e5211bcca462f97ebc5b9d37ed2a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseDamageLight: 100
-  _baseDamageHeavy: 12
+  _baseDamageLight: 20
+  _baseDamageHeavy: 25
 --- !u!95 &689688409614056584 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 4806736104923512233, guid: 9d69e7c3444bdc4459a317f6548db481, type: 3}

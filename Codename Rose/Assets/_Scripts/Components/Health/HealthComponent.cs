@@ -15,9 +15,6 @@ namespace _Scripts.Components.Health
         [SerializeField] private UnityEvent _onDie;
         private bool _dead;
 
-        private float _incomingDamage;
-
-        private DamagePopUp _damagePopUp;
         private BlinkVisualEffect _blinkVisualEffect;
         private GameObject _attacker;
 
@@ -29,14 +26,12 @@ namespace _Scripts.Components.Health
         private void Awake()
         {
            
-            _damagePopUp = GetComponent<DamagePopUp>();
             _blinkVisualEffect = GetComponent<BlinkVisualEffect>();
         }
 
         public void TakeDamage(float damage, GameObject attacker)
         {
             if (_dead) return;
-            _incomingDamage = damage;
             if (damage < 0) throw new ArgumentException("Damage is less than zero");
             _attacker = attacker;
             _health -= damage;
@@ -55,7 +50,6 @@ namespace _Scripts.Components.Health
 
         private void OnDamage()
         {
-            _damagePopUp.SpawnDamagePopUp(_incomingDamage);
             _blinkVisualEffect.Blink();
         }
     }

@@ -24,4 +24,4 @@ MonoBehaviour:
     _sprite: {fileID: -1656521631, guid: 0c70ea70b7a3435469e5acd06e719f40, type: 3}
   - _type: 3
     _buttonGameObject: {fileID: 243916913904058242, guid: db24b440a50aedf458b5ee13fa80fbf1, type: 3}
-    _sprite: {fileID: 21300000, guid: b8c8fe8afdfc8274f8f41588303232e9, type: 3}
+    _sprite: {fileID: 21300000, guid: aa2cc6f354e5d2d47850e5d9442651e9, type: 3}
